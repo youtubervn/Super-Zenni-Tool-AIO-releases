@@ -362,7 +362,7 @@
     <div class="sec-head"><h2><i class="fas fa-rocket"></i> <span data-i18n="inst.title">Install in 3 steps</span></h2></div>
     <div class="steps">
       <div class="step"><div class="n">1</div><div><h4 data-i18n="inst.s1h">Download</h4><p data-i18n="inst.s1p">Pick the file for your OS in the Download section above.</p></div></div>
-      <div class="step"><div class="n">2</div><div><h4 data-i18n="inst.s2h">Open the app</h4><p data-i18n="inst.s2p">Windows: run the .exe (if SmartScreen warns → More info → Run anyway). macOS: unzip, drag to Applications, right-click → Open. Linux: extract &amp; run.</p></div></div>
+      <div class="step"><div class="n">2</div><div><h4 data-i18n="inst.s2h">Open the app</h4><p data-i18n-html="inst.s2p"><b>Windows:</b> run the .exe (if SmartScreen warns → More info → Run anyway).<br/><b>macOS:</b> unzip, drag to Applications, right-click → Open.<br/><b>Linux:</b> extract &amp; run.</p></div></div>
       <div class="step"><div class="n">3</div><div><h4 data-i18n="inst.s3h">Start using</h4><p data-i18n="inst.s3p">On first launch the app downloads FFmpeg/yt-dlp. Sign in and use every tool.</p></div></div>
     </div>
   </div>
@@ -387,9 +387,6 @@
     <div class="fstats">
       <span class="fstat" data-i18n-tip="tip.visits"><i class="fas fa-eye"></i> <b id="st-visits">—</b></span>
       <span class="fstat" data-i18n-tip="tip.total"><i class="fas fa-download"></i> <b id="st-total">—</b></span>
-      <span class="fstat" data-i18n-tip="tip.win"><i class="fab fa-windows"></i> <b id="st-win">—</b></span>
-      <span class="fstat" data-i18n-tip="tip.mac"><i class="fab fa-apple"></i> <b id="st-mac">—</b></span>
-      <span class="fstat" data-i18n-tip="tip.linux"><i class="fab fa-linux"></i> <b id="st-linux">—</b></span>
     </div>
     <div class="social">
       <a href="https://viennv.dev" target="_blank" rel="noopener"><i class="fas fa-globe"></i> Website</a>
@@ -478,7 +475,7 @@
       "shots.title":"Screenshots","shots.sub":"Clean, modern, easy to use.",
       "shots.cap1":"Green Screen — overlay a chroma-key clip onto your video","shots.cap2":"Render H264 / H265 — batch transcode","shots.cap3":"Built-in guide for each tool",
       "inst.title":"Install in 3 steps","inst.s1h":"Download","inst.s1p":"Pick the file for your OS in the Download section above.",
-      "inst.s2h":"Open the app","inst.s2p":"Windows: run the .exe (if SmartScreen warns → More info → Run anyway). macOS: unzip, drag to Applications, right-click → Open. Linux: extract &amp; run.",
+      "inst.s2h":"Open the app","inst.s2p":"<b>Windows:</b> run the .exe (if SmartScreen warns → More info → Run anyway).<br/><b>macOS:</b> unzip, drag to Applications, right-click → Open.<br/><b>Linux:</b> extract &amp; run.",
       "inst.s3h":"Start using","inst.s3p":"On first launch the app downloads FFmpeg/yt-dlp. Sign in and use every tool.",
       "faq.title":"FAQ",
       "faq.q1":"Do I need to install FFmpeg first?","faq.a1":"No. The app downloads FFmpeg and yt-dlp into a data/ folder next to it on first run.",
@@ -517,7 +514,7 @@
       "shots.title":"Giao diện","shots.sub":"Thiết kế tối giản, hiện đại, dễ dùng.",
       "shots.cap1":"Phông xanh — chèn clip chroma-key lên video của bạn","shots.cap2":"Render H264 / H265 — chuyển mã hàng loạt","shots.cap3":"Hướng dẫn ngay trong app cho từng công cụ",
       "inst.title":"Cài đặt trong 3 bước","inst.s1h":"Tải về","inst.s1p":"Chọn file đúng hệ điều hành ở mục Tải về phía trên.",
-      "inst.s2h":"Mở ứng dụng","inst.s2p":"Windows: chạy .exe (nếu SmartScreen cảnh báo → More info → Run anyway). macOS: giải nén, kéo vào Applications, chuột phải → Open. Linux: giải nén &amp; chạy.",
+      "inst.s2h":"Mở ứng dụng","inst.s2p":"<b>Windows:</b> chạy .exe (nếu SmartScreen cảnh báo → More info → Run anyway).<br/><b>macOS:</b> giải nén, kéo vào Applications, chuột phải → Open.<br/><b>Linux:</b> giải nén &amp; chạy.",
       "inst.s3h":"Bắt đầu dùng","inst.s3p":"Lần đầu mở, app tự tải FFmpeg/yt-dlp. Đăng nhập và sử dụng tất cả công cụ.",
       "faq.title":"Câu hỏi thường gặp",
       "faq.q1":"App có cần cài FFmpeg trước không?","faq.a1":"Không. App tự tải FFmpeg và yt-dlp vào thư mục data/ cạnh ứng dụng khi chạy lần đầu.",
@@ -627,11 +624,8 @@
       });
       DLC.win = win; DLC.mac = mac; DLC.linux = linux; renderDlCounts();
       countUp(document.getElementById("st-total"), win + mac + linux);
-      countUp(document.getElementById("st-win"), win);
-      countUp(document.getElementById("st-mac"), mac);
-      countUp(document.getElementById("st-linux"), linux);
     })
-    .catch(function () { ["st-total","st-win","st-mac","st-linux"].forEach(function (id) { var el = document.getElementById(id); if (el) el.textContent = "—"; }); });
+    .catch(function () { var el = document.getElementById("st-total"); if (el) el.textContent = "—"; });
 
   /* ---------------- visit count (GoatCounter) ---------------- */
   fetch("https://viennvbn.goatcounter.com/counter/TOTAL.json")
