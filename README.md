@@ -27,9 +27,9 @@
 
 | Hệ điều hành | File tải | Ghi chú |
 | --- | --- | --- |
-| 🪟 **Windows** (64-bit) | `Super-Zenni-AIO-Tool-windows-amd64.exe` | Tải về và chạy trực tiếp |
-| 🍎 **macOS** (Apple Silicon + Intel) | `Super-Zenni-AIO-Tool-macos-universal.zip` | Giải nén → kéo vào Applications |
-| 🐧 **Linux / Ubuntu** (64-bit) | `Super-Zenni-AIO-Tool-linux-amd64.tar.gz` | Giải nén → cấp quyền chạy |
+| 🪟 **Windows** (64-bit) | `super-zenni-tool-aio-pro-windows-amd64.exe` | Tải về và chạy trực tiếp |
+| 🍎 **macOS** (Apple Silicon + Intel) | `super-zenni-tool-aio-pro-macos-universal.zip` | Giải nén → kéo vào Applications |
+| 🐧 **Linux / Ubuntu** (64-bit) | `super-zenni-tool-aio-pro-linux-amd64.tar.gz` | Giải nén → cấp quyền chạy |
 
 ### Hướng dẫn cài nhanh
 
@@ -54,9 +54,9 @@
 <summary><b>🐧 Linux / Ubuntu</b></summary>
 
 ```bash
-tar -xzf Super-Zenni-AIO-Tool-linux-amd64.tar.gz
-chmod +x Super-Zenni-AIO-Tool-*
-./Super-Zenni-AIO-Tool-*
+tar -xzf super-zenni-tool-aio-pro-linux-amd64.tar.gz
+chmod +x super-zenni-tool-aio-pro-*
+./super-zenni-tool-aio-pro-*
 ```
 Cần thư viện hệ thống `libgtk-3` và `libwebkit2gtk-4.0` (đa số bản Ubuntu đã có sẵn).
 </details>
