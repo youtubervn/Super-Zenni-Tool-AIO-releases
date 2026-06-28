@@ -182,6 +182,20 @@
   }
   .lightbox-close:hover { background: rgba(255,255,255,.18); }
 
+  /* Stats */
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  @media (max-width: 760px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+  .stat {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 26px 18px;
+    text-align: center; transition: transform .15s, border-color .2s;
+  }
+  .stat:hover { transform: translateY(-3px); border-color: rgba(96,165,250,.4); }
+  .stat-total { background: linear-gradient(180deg, rgba(59,130,246,.14), var(--card)); border-color: rgba(96,165,250,.35); }
+  .stat-ico { font-size: 26px; color: var(--blue); margin-bottom: 10px; }
+  .stat-total .stat-ico { color: var(--green); }
+  .stat-num { font-size: 34px; font-weight: 850; letter-spacing: -1px; color: #f8fafc; font-variant-numeric: tabular-nums; }
+  .stat-lbl { font-size: 13px; color: var(--mut); margin-top: 4px; }
+
   /* Steps */
   .steps { max-width: 760px; margin: 0 auto; display: grid; gap: 14px; }
   .step { display: flex; gap: 16px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; }
@@ -217,6 +231,7 @@
       <a href="#download">Tải về</a>
       <a href="#features">Tính năng</a>
       <a href="#screenshots">Giao diện</a>
+      <a href="#stats">Thống kê</a>
       <a href="#install">Cài đặt</a>
       <a href="#faq">FAQ</a>
       <a href="https://viennv.dev" target="_blank" rel="noopener">viennv.dev ↗</a>
@@ -262,6 +277,35 @@
       </div>
     </div>
     <p style="text-align:center;margin-top:20px;font-size:13px;" class="muted"><i class="fas fa-bolt" style="color:var(--green)"></i> Lần đầu mở, app tự tải FFmpeg &amp; yt-dlp — không cần cài đặt thủ công.</p>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats" style="background:var(--bg2);">
+  <div class="wrap">
+    <div class="sec-head"><h2><i class="fas fa-chart-simple"></i> Thống kê</h2><p>Số liệu lượt tải tổng hợp trực tiếp từ GitHub.</p></div>
+    <div class="stat-grid">
+      <div class="stat stat-total">
+        <div class="stat-ico"><i class="fas fa-download"></i></div>
+        <div class="stat-num" id="st-total">—</div>
+        <div class="stat-lbl">Tổng lượt tải</div>
+      </div>
+      <div class="stat">
+        <div class="stat-ico"><i class="fab fa-windows"></i></div>
+        <div class="stat-num" id="st-win">—</div>
+        <div class="stat-lbl">Windows</div>
+      </div>
+      <div class="stat">
+        <div class="stat-ico"><i class="fab fa-apple"></i></div>
+        <div class="stat-num" id="st-mac">—</div>
+        <div class="stat-lbl">macOS</div>
+      </div>
+      <div class="stat">
+        <div class="stat-ico"><i class="fab fa-linux"></i></div>
+        <div class="stat-num" id="st-linux">—</div>
+        <div class="stat-lbl">Linux</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -379,6 +423,48 @@
     var el = document.getElementById(id);
     if (el) el.setAttribute("href", url);
   }
+
+  // Download stats: sum asset download_count across ALL releases, per OS.
+  // Pure GitHub API — no backend.
+  (function () {
+    var fmt = function (n) { return n.toLocaleString("vi-VN"); };
+    function countUp(el, target) {
+      if (!el) return;
+      var dur = 900, t0 = null;
+      function step(ts) {
+        if (!t0) t0 = ts;
+        var p = Math.min((ts - t0) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+        el.textContent = fmt(Math.round(target * eased));
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    fetch("https://api.github.com/repos/" + REPO + "/releases?per_page=100", { headers: { Accept: "application/vnd.github+json" } })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function (releases) {
+        var win = 0, mac = 0, linux = 0;
+        (releases || []).forEach(function (rel) {
+          (rel.assets || []).forEach(function (a) {
+            var n = (a.name || "").toLowerCase();
+            var c = a.download_count || 0;
+            if (n.indexOf("windows") >= 0) win += c;
+            else if (n.indexOf("macos") >= 0 || n.indexOf("darwin") >= 0) mac += c;
+            else if (n.indexOf("linux") >= 0) linux += c;
+          });
+        });
+        var total = win + mac + linux;
+        countUp(document.getElementById("st-total"), total);
+        countUp(document.getElementById("st-win"), win);
+        countUp(document.getElementById("st-mac"), mac);
+        countUp(document.getElementById("st-linux"), linux);
+      })
+      .catch(function () {
+        ["st-total", "st-win", "st-mac", "st-linux"].forEach(function (id) {
+          var el = document.getElementById(id); if (el) el.textContent = "—";
+        });
+      });
+  })();
 
   // Lightbox: click a screenshot to zoom; click image/backdrop/✕ or press Esc to close.
   (function () {
