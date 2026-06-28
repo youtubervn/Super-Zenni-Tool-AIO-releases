@@ -202,16 +202,17 @@
   .totop.show { opacity: 1; visibility: visible; transform: translateY(0); }
   .totop:hover { transform: translateY(-3px); }
 
-  /* Floating donate button */
-  .donate-fab { position: fixed; right: 22px; bottom: 78px; display: inline-flex; align-items: center; gap: 9px;
-    background: linear-gradient(135deg, #fb7185, #f59e0b); color: #fff; border: 0; height: 46px; padding: 0 18px;
-    border-radius: 999px; font-size: 14px; font-weight: 800; cursor: pointer; box-shadow: 0 8px 24px rgba(251,113,133,.45);
+  /* Floating donate button — icon stacked above the label */
+  .donate-fab { position: fixed; right: 22px; bottom: 78px; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+    background: linear-gradient(135deg, #fb7185, #f59e0b); color: #fff; border: 0; padding: 10px 16px;
+    border-radius: 16px; font-size: 11.5px; font-weight: 800; line-height: 1.15; cursor: pointer; box-shadow: 0 8px 24px rgba(251,113,133,.45);
     transition: transform .15s, box-shadow .2s; z-index: 60; }
-  .donate-fab i { font-size: 16px; }
+  .donate-fab i { font-size: 19px; }
+  .donate-fab .lbl { max-width: 78px; text-align: center; }
   .donate-fab:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(251,113,133,.55); }
-  .donate-fab .pulse { position: absolute; inset: 0; border-radius: 999px; box-shadow: 0 0 0 0 rgba(251,113,133,.55); animation: donate-pulse 2.4s infinite; pointer-events: none; }
+  .donate-fab .pulse { position: absolute; inset: 0; border-radius: 16px; box-shadow: 0 0 0 0 rgba(251,113,133,.55); animation: donate-pulse 2.4s infinite; pointer-events: none; }
   @keyframes donate-pulse { 0% { box-shadow: 0 0 0 0 rgba(251,113,133,.5); } 70% { box-shadow: 0 0 0 14px rgba(251,113,133,0); } 100% { box-shadow: 0 0 0 0 rgba(251,113,133,0); } }
-  @media (max-width: 560px) { .donate-fab span.lbl { display: none; } .donate-fab { padding: 0; width: 46px; justify-content: center; } }
+  @media (max-width: 560px) { .donate-fab span.lbl { display: none; } .donate-fab { padding: 0; width: 46px; height: 46px; border-radius: 999px; } .donate-fab .pulse { border-radius: 999px; } }
 
   /* Donate modal */
   .donate-modal { position: fixed; inset: 0; z-index: 1100; display: flex; align-items: center; justify-content: center;
@@ -238,8 +239,11 @@
   .donate-pane.active { display: block; animation: donate-fade .2s ease; }
   @keyframes donate-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
   .donate-qr { width: 220px; max-width: 80%; height: auto; display: block; margin: 0 auto; border-radius: 12px; border: 1px solid var(--line); background: #fff; }
-  .donate-bank { margin-top: 14px; font-size: 13px; color: var(--mut); line-height: 1.7; }
-  .donate-bank b { color: var(--txt); font-variant-numeric: tabular-nums; }
+  .donate-bank { margin-top: 16px; font-size: 13px; display: grid; gap: 7px; text-align: left;
+    background: var(--bg2); border: 1px solid var(--line); border-radius: 12px; padding: 13px 15px; }
+  .donate-bank .bank-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+  .donate-bank .bank-lbl { color: var(--dim); flex: none; }
+  .donate-bank .bank-val { color: var(--txt); font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; word-break: break-word; }
   .donate-close { position: absolute; top: 12px; right: 14px; width: 34px; height: 34px; border-radius: 50%;
     background: rgba(255,255,255,.06); border: 1px solid var(--line); color: var(--txt); font-size: 14px; display: grid; place-items: center; cursor: pointer; transition: background .15s; }
   .donate-close:hover { background: rgba(255,255,255,.16); }
@@ -428,8 +432,10 @@
 
     <div class="donate-pane" data-pane="bank">
       <img class="donate-qr" src="assets/donate-vietqr.png" alt="VietQR — Vietcombank donate QR" loading="lazy" />
-      <div class="donate-bank" data-i18n-html="donate.bankInfo">
-        <b>NGUYEN VAN VIEN</b><br/>Vietcombank · <b>9989621896</b>
+      <div class="donate-bank">
+        <div class="bank-row"><span class="bank-lbl" data-i18n="donate.bankHolder">Account holder</span><span class="bank-val">NGUYEN VAN VIEN</span></div>
+        <div class="bank-row"><span class="bank-lbl" data-i18n="donate.bankNo">Account number</span><span class="bank-val">9989621896</span></div>
+        <div class="bank-row"><span class="bank-lbl" data-i18n="donate.bankName">Bank</span><span class="bank-val">Vietcombank</span></div>
       </div>
       <div class="donate-note" data-i18n="donate.bankNote">Scan with any VietQR / banking app · any amount is appreciated</div>
     </div>
@@ -484,7 +490,7 @@
       "donate.fab":"Buy me a coffee","donate.title":"Support the developer",
       "donate.desc":"Super Zenni Tool AIO Pro is free. If it helps your work, a small coffee keeps it improving — thank you! 🙏",
       "donate.paypal":"Donate via PayPal","donate.note":"Secure payment via PayPal · any amount is appreciated",
-      "donate.bankTab":"Bank","donate.bankInfo":"<b>NGUYEN VAN VIEN</b><br/>Vietcombank · <b>9989621896</b>",
+      "donate.bankTab":"Bank","donate.bankHolder":"Account holder","donate.bankNo":"Account number","donate.bankName":"Bank",
       "donate.bankNote":"Scan with any VietQR / banking app · any amount is appreciated"
     },
     vi: {
@@ -523,7 +529,7 @@
       "donate.fab":"Mời tác giả ly cà phê","donate.title":"Ủng hộ tác giả",
       "donate.desc":"Super Zenni Tool AIO Pro hoàn toàn miễn phí. Nếu công cụ giúp ích cho bạn, một ly cà phê nhỏ sẽ tiếp sức để app ngày càng tốt hơn — cảm ơn bạn! 🙏",
       "donate.paypal":"Ủng hộ qua PayPal","donate.note":"Thanh toán an toàn qua PayPal · mọi đóng góp đều trân quý",
-      "donate.bankTab":"Ngân hàng","donate.bankInfo":"<b>NGUYEN VAN VIEN</b><br/>Vietcombank · <b>9989621896</b>",
+      "donate.bankTab":"Ngân hàng","donate.bankHolder":"Chủ tài khoản","donate.bankNo":"Số tài khoản","donate.bankName":"Ngân hàng",
       "donate.bankNote":"Quét bằng app ngân hàng / VietQR bất kỳ · mọi đóng góp đều trân quý"
     }
   };
