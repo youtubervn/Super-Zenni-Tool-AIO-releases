@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎬 Super Zenni AIO Tool
+# 🎬 Super Zenni Tool AIO Pro
 
 ### Bộ công cụ video All-in-One cho Streamer & Reup
 
@@ -14,7 +14,7 @@
 
 ---
 
-**Super Zenni AIO Tool** gói gọn mọi thứ một streamer / reup cần vào **một ứng dụng desktop duy nhất**: phát trực tiếp nhiều luồng 24/7, xử lý video hàng loạt (render, cắt, ghép, lặp), chèn intro/outro/logo, ghép phông xanh — và **tự động cập nhật**.
+**Super Zenni Tool AIO Pro** gói gọn mọi thứ một streamer / reup cần vào **một ứng dụng desktop duy nhất**: phát trực tiếp nhiều luồng 24/7, xử lý video hàng loạt (render, cắt, ghép, lặp), chèn intro/outro/logo, ghép phông xanh — và **tự động cập nhật**.
 
 > ⚡ Dùng FFmpeg & yt-dlp, **tự tải về khi mở lần đầu** — không cần cài đặt gì thêm.
 > 🖥️ Chạy trên **Windows, macOS (Apple Silicon + Intel), và Linux**.
@@ -45,7 +45,7 @@
 <summary><b>🍎 macOS</b></summary>
 
 1. Tải file `.zip`, bấm đúp để giải nén.
-2. Kéo **Super Zenni AIO Tool.app** vào thư mục **Applications**.
+2. Kéo **Super Zenni Tool AIO Pro.app** vào thư mục **Applications**.
 3. Lần đầu mở: chuột phải vào app → **Open** → **Open** (để qua Gatekeeper).
 4. App tự tải FFmpeg/yt-dlp khi chạy lần đầu.
 </details>
