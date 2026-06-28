@@ -247,6 +247,23 @@
   .donate-close { position: absolute; top: 12px; right: 14px; width: 34px; height: 34px; border-radius: 50%;
     background: rgba(255,255,255,.06); border: 1px solid var(--line); color: var(--txt); font-size: 14px; display: grid; place-items: center; cursor: pointer; transition: background .15s; }
   .donate-close:hover { background: rgba(255,255,255,.16); }
+
+  /* ---------------- Scroll reveal animations ---------------- */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1); will-change: opacity, transform; }
+  .reveal.in-view { opacity: 1; transform: none; }
+  /* slight playful pop for cards/icons */
+  .reveal.pop { transform: translateY(28px) scale(.96); }
+  .reveal.pop.in-view { transform: none; }
+  /* stagger children within a group via inline --d delay */
+  .reveal[style*="--d"] { transition-delay: var(--d); }
+  /* feature/dl icons get an extra little bounce when their card reveals */
+  .feat.in-view .ico, .dl-card.in-view .os-ico { animation: icon-pop .5s cubic-bezier(.34,1.56,.64,1) both; animation-delay: inherit; }
+  @keyframes icon-pop { 0% { transform: scale(.4); opacity: 0; } 60% { transform: scale(1.12); } 100% { transform: scale(1); opacity: 1; } }
+  /* respect reduced-motion: show everything, no movement */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal.pop { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .feat .ico, .dl-card .os-ico { animation: none !important; }
+  }
 </style>
 </head>
 <body>
@@ -662,6 +679,38 @@
         modal.querySelectorAll(".donate-pane").forEach(function (p) { p.classList.toggle("active", p.getAttribute("data-pane") === name); });
       });
     });
+  })();
+
+  /* ---------------- scroll reveal (IntersectionObserver) ---------------- */
+  (function () {
+    // Groups whose direct children animate one-by-one (stagger).
+    var groups = [".dl-grid", ".feat-grid", ".shots", ".steps", ".faq"];
+    var solo = [".sec-head", ".dl-meta", ".hero-left", ".hero-right"];
+    var popSel = ".dl-card,.feat,.shot"; // cards get the scale "pop"
+
+    function tag(el, i) {
+      el.classList.add("reveal");
+      if (el.matches(popSel)) el.classList.add("pop");
+      if (i != null) el.style.setProperty("--d", (i * 80) + "ms");
+    }
+    solo.forEach(function (s) { document.querySelectorAll(s).forEach(function (el) { tag(el); }); });
+    groups.forEach(function (g) {
+      document.querySelectorAll(g).forEach(function (grp) {
+        Array.prototype.forEach.call(grp.children, function (child, i) { tag(child, i); });
+      });
+    });
+
+    var els = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window)) { // very old browsers: just show
+      els.forEach(function (el) { el.classList.add("in-view"); });
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add("in-view"); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+      els.forEach(function (el) { io.observe(el); });
+    }
   })();
 
   applyLang(lang); // init
