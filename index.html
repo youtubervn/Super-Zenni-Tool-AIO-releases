@@ -201,6 +201,36 @@
   .totop { position: fixed; right: 22px; bottom: 22px; width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg, var(--grad1), var(--grad2)); color: #fff; border: 0; font-size: 17px; cursor: pointer; box-shadow: 0 8px 24px rgba(59,130,246,.4); opacity: 0; visibility: hidden; transform: translateY(10px); transition: all .2s; z-index: 60; }
   .totop.show { opacity: 1; visibility: visible; transform: translateY(0); }
   .totop:hover { transform: translateY(-3px); }
+
+  /* Floating donate button */
+  .donate-fab { position: fixed; right: 22px; bottom: 78px; display: inline-flex; align-items: center; gap: 9px;
+    background: linear-gradient(135deg, #fb7185, #f59e0b); color: #fff; border: 0; height: 46px; padding: 0 18px;
+    border-radius: 999px; font-size: 14px; font-weight: 800; cursor: pointer; box-shadow: 0 8px 24px rgba(251,113,133,.45);
+    transition: transform .15s, box-shadow .2s; z-index: 60; }
+  .donate-fab i { font-size: 16px; }
+  .donate-fab:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(251,113,133,.55); }
+  .donate-fab .pulse { position: absolute; inset: 0; border-radius: 999px; box-shadow: 0 0 0 0 rgba(251,113,133,.55); animation: donate-pulse 2.4s infinite; pointer-events: none; }
+  @keyframes donate-pulse { 0% { box-shadow: 0 0 0 0 rgba(251,113,133,.5); } 70% { box-shadow: 0 0 0 14px rgba(251,113,133,0); } 100% { box-shadow: 0 0 0 0 rgba(251,113,133,0); } }
+  @media (max-width: 560px) { .donate-fab span.lbl { display: none; } .donate-fab { padding: 0; width: 46px; justify-content: center; } }
+
+  /* Donate modal */
+  .donate-modal { position: fixed; inset: 0; z-index: 1100; display: flex; align-items: center; justify-content: center;
+    background: rgba(2,6,16,.9); backdrop-filter: blur(6px); padding: 24px; opacity: 0; visibility: hidden; transition: opacity .2s, visibility .2s; }
+  .donate-modal.open { opacity: 1; visibility: visible; }
+  .donate-box { position: relative; width: 100%; max-width: 400px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 18px; padding: 30px 26px; text-align: center; transform: scale(.96); transition: transform .2s; box-shadow: 0 24px 70px rgba(0,0,0,.7); }
+  .donate-modal.open .donate-box { transform: scale(1); }
+  .donate-box .heart { font-size: 34px; color: #fb7185; margin-bottom: 12px; }
+  .donate-box h3 { font-size: 21px; font-weight: 800; letter-spacing: -.4px; }
+  .donate-box p { color: var(--mut); font-size: 14px; margin: 10px 0 22px; }
+  .donate-paypal { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
+    background: #0070ba; color: #fff; padding: 13px; border-radius: 12px; font-weight: 800; font-size: 15px; transition: background .15s, transform .12s; }
+  .donate-paypal:hover { background: #005ea6; transform: translateY(-2px); }
+  .donate-paypal i { font-size: 19px; }
+  .donate-note { margin-top: 16px; font-size: 12px; color: var(--dim); }
+  .donate-close { position: absolute; top: 12px; right: 14px; width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(255,255,255,.06); border: 1px solid var(--line); color: var(--txt); font-size: 14px; display: grid; place-items: center; cursor: pointer; transition: background .15s; }
+  .donate-close:hover { background: rgba(255,255,255,.16); }
 </style>
 </head>
 <body>
@@ -358,6 +388,26 @@
 
 <button class="totop" id="totop" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
 
+<!-- Floating donate button -->
+<button class="donate-fab" id="donate-fab" aria-label="Donate" data-i18n-aria="donate.fab">
+  <span class="pulse"></span>
+  <i class="fas fa-mug-hot"></i> <span class="lbl" data-i18n="donate.fab">Buy me a coffee</span>
+</button>
+
+<!-- Donate modal -->
+<div class="donate-modal" id="donate-modal" role="dialog" aria-modal="true" aria-labelledby="donate-title">
+  <div class="donate-box">
+    <button class="donate-close" id="donate-close" aria-label="Close"><i class="fas fa-times"></i></button>
+    <div class="heart"><i class="fas fa-heart"></i></div>
+    <h3 id="donate-title" data-i18n="donate.title">Support the developer</h3>
+    <p data-i18n="donate.desc">Super Zenni Tool AIO Pro is free. If it helps your work, a small coffee keeps it improving — thank you! 🙏</p>
+    <a class="donate-paypal" href="https://www.paypal.com/paypalme/viennvbn/10" target="_blank" rel="noopener">
+      <i class="fab fa-paypal"></i> <span data-i18n="donate.paypal">Donate via PayPal</span>
+    </a>
+    <div class="donate-note" data-i18n="donate.note">Secure payment via PayPal · any amount is appreciated</div>
+  </div>
+</div>
+
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Zoom image">
   <button class="lightbox-close" id="lightbox-close" aria-label="Close"><i class="fas fa-times"></i></button>
@@ -402,7 +452,10 @@
       "faq.q3":"macOS says the developer can't be verified?","faq.a3":"Right-click the app → Open → Open. You only need to do this once.",
       "faq.q4":"How do updates work?","faq.a4":"The app notifies you of new builds. Windows/Linux update automatically; macOS downloads then guides a manual install. You can also click \"Check for updates\" in the app.",
       "foot.register":"Register","foot.tag":"Made with ❤️ for streamers &amp; re-uploaders",
-      "dl.count":"downloads"
+      "dl.count":"downloads",
+      "donate.fab":"Buy me a coffee","donate.title":"Support the developer",
+      "donate.desc":"Super Zenni Tool AIO Pro is free. If it helps your work, a small coffee keeps it improving — thank you! 🙏",
+      "donate.paypal":"Donate via PayPal","donate.note":"Secure payment via PayPal · any amount is appreciated"
     },
     vi: {
       "nav.download":"Tải về","nav.features":"Tính năng","nav.screenshots":"Giao diện","nav.stats":"Thống kê","nav.install":"Cài đặt","nav.faq":"FAQ",
@@ -436,7 +489,10 @@
       "faq.q3":"macOS báo nhà phát triển chưa xác minh?","faq.a3":"Chuột phải vào app → Open → Open. Chỉ cần làm một lần.",
       "faq.q4":"Cập nhật phiên bản mới thế nào?","faq.a4":"App tự báo khi có bản mới. Windows/Linux cập nhật tự động; macOS tải về rồi hướng dẫn cài thủ công. Bạn cũng có thể bấm \"Kiểm tra cập nhật\" trong app.",
       "foot.register":"Đăng ký","foot.tag":"Made with ❤️ for streamers &amp; re-uploaders",
-      "dl.count":"lượt tải"
+      "dl.count":"lượt tải",
+      "donate.fab":"Mời tác giả ly cà phê","donate.title":"Ủng hộ tác giả",
+      "donate.desc":"Super Zenni Tool AIO Pro hoàn toàn miễn phí. Nếu công cụ giúp ích cho bạn, một ly cà phê nhỏ sẽ tiếp sức để app ngày càng tốt hơn — cảm ơn bạn! 🙏",
+      "donate.paypal":"Ủng hộ qua PayPal","donate.note":"Thanh toán an toàn qua PayPal · mọi đóng góp đều trân quý"
     }
   };
   var lang = localStorage.getItem("zenni_lang") || "en";
@@ -454,6 +510,9 @@
     });
     document.querySelectorAll("[data-i18n-tip]").forEach(function (el) {
       var k = el.getAttribute("data-i18n-tip"); if (dict[k] != null) el.setAttribute("data-tip", dict[k]);
+    });
+    document.querySelectorAll("[data-i18n-aria]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n-aria"); if (dict[k] != null) el.setAttribute("aria-label", dict[k]);
     });
     document.querySelectorAll(".lang button").forEach(function (b) {
       b.classList.toggle("active", b.getAttribute("data-lang") === lang);
@@ -551,6 +610,18 @@
     lb.addEventListener("click", close);
     document.getElementById("lightbox-close").addEventListener("click", function (e) { e.stopPropagation(); close(); });
     document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+  })();
+
+  /* ---------------- donate modal ---------------- */
+  (function () {
+    var fab = document.getElementById("donate-fab"), modal = document.getElementById("donate-modal"),
+        close = document.getElementById("donate-close");
+    function open() { modal.classList.add("open"); document.body.style.overflow = "hidden"; }
+    function shut() { modal.classList.remove("open"); document.body.style.overflow = ""; }
+    fab.addEventListener("click", open);
+    close.addEventListener("click", shut);
+    modal.addEventListener("click", function (e) { if (e.target === modal) shut(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") shut(); });
   })();
 
   applyLang(lang); // init
