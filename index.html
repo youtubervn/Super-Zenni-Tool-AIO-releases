@@ -339,11 +339,11 @@
   <div class="wrap">
     <!-- Compact stats strip with CSS tooltips -->
     <div class="fstats">
-      <span class="fstat" data-tip="Lượt truy cập website / Website visits"><i class="fas fa-eye"></i> <b id="st-visits">—</b> <span data-i18n="stats.visits">Visits</span></span>
-      <span class="fstat" data-tip="Tổng lượt tải tất cả nền tảng / Total downloads (all platforms)"><i class="fas fa-download"></i> <b id="st-total">—</b> <span data-i18n="stats.total">Total downloads</span></span>
-      <span class="fstat" data-tip="Lượt tải bản Windows"><i class="fab fa-windows"></i> <b id="st-win">—</b></span>
-      <span class="fstat" data-tip="Lượt tải bản macOS (Universal)"><i class="fab fa-apple"></i> <b id="st-mac">—</b></span>
-      <span class="fstat" data-tip="Lượt tải bản Linux"><i class="fab fa-linux"></i> <b id="st-linux">—</b></span>
+      <span class="fstat" data-i18n-tip="tip.visits"><i class="fas fa-eye"></i> <b id="st-visits">—</b> <span data-i18n="stats.visits">Visits</span></span>
+      <span class="fstat" data-i18n-tip="tip.total"><i class="fas fa-download"></i> <b id="st-total">—</b> <span data-i18n="stats.total">Total downloads</span></span>
+      <span class="fstat" data-i18n-tip="tip.win"><i class="fab fa-windows"></i> <b id="st-win">—</b></span>
+      <span class="fstat" data-i18n-tip="tip.mac"><i class="fab fa-apple"></i> <b id="st-mac">—</b></span>
+      <span class="fstat" data-i18n-tip="tip.linux"><i class="fab fa-linux"></i> <b id="st-linux">—</b></span>
     </div>
     <div class="social">
       <a href="https://viennv.dev" target="_blank" rel="noopener"><i class="fas fa-globe"></i> Website</a>
@@ -380,6 +380,7 @@
       "dl.version":"Version","dl.released":"Released","dl.req":"Windows 10+ · macOS 11+ · 64-bit",
       "dl.ffmpeg":"On first launch the app downloads FFmpeg &amp; yt-dlp automatically — no manual setup.",
       "stats.title":"Stats","stats.sub":"Live visits &amp; downloads.","stats.visits":"Visits","stats.total":"Total downloads",
+      "tip.visits":"Website visits","tip.total":"Total downloads (all platforms)","tip.win":"Windows downloads","tip.mac":"macOS downloads (Universal)","tip.linux":"Linux downloads",
       "feat.title":"Features","feat.sub":"Everything a streamer / reup needs, in one app.",
       "feat.live.h":"Super Live Stream","feat.live.p":"Stream multiple sources to RTMP (YouTube/Facebook/TikTok), live FPS/bitrate, scheduler, loop, shuffle. Bad videos auto-skipped — ideal for 24/7.",
       "feat.basic.h":"Basic Live Stream","feat.basic.p":"Generate a standalone script (.bat/.sh) running in its own console with timestamped logs that stays open on error. Manage &amp; re-run easily.",
@@ -413,6 +414,7 @@
       "dl.version":"Phiên bản","dl.released":"Phát hành","dl.req":"Windows 10+ · macOS 11+ · 64-bit",
       "dl.ffmpeg":"Lần đầu mở, app tự tải FFmpeg &amp; yt-dlp — không cần cài đặt thủ công.",
       "stats.title":"Thống kê","stats.sub":"Lượt truy cập &amp; lượt tải, cập nhật trực tiếp.","stats.visits":"Lượt truy cập","stats.total":"Tổng lượt tải",
+      "tip.visits":"Lượt truy cập website","tip.total":"Tổng lượt tải tất cả nền tảng","tip.win":"Lượt tải bản Windows","tip.mac":"Lượt tải bản macOS (Universal)","tip.linux":"Lượt tải bản Linux",
       "feat.title":"Tính năng","feat.sub":"Mọi thứ một streamer / reup cần, trong một app.",
       "feat.live.h":"Super Live Stream","feat.live.p":"Phát nhiều luồng tới RTMP (YouTube/Facebook/TikTok), theo dõi FPS/bitrate trực tiếp, hẹn giờ, lặp, ngẫu nhiên. Video lỗi tự bỏ qua — lý tưởng cho 24/7.",
       "feat.basic.h":"Basic Live Stream","feat.basic.p":"Tạo script độc lập (.bat/.sh) chạy trong console riêng, log có thời gian, luôn hiển thị kể cả khi lỗi. Quản lý &amp; chạy lại dễ dàng.",
@@ -449,6 +451,9 @@
     });
     document.querySelectorAll("[data-i18n-html]").forEach(function (el) {
       var k = el.getAttribute("data-i18n-html"); if (dict[k] != null) el.innerHTML = dict[k];
+    });
+    document.querySelectorAll("[data-i18n-tip]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n-tip"); if (dict[k] != null) el.setAttribute("data-tip", dict[k]);
     });
     document.querySelectorAll(".lang button").forEach(function (b) {
       b.classList.toggle("active", b.getAttribute("data-lang") === lang);
