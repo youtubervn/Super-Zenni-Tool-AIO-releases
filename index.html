@@ -183,16 +183,19 @@
   .lightbox-close:hover { background: rgba(255,255,255,.18); }
 
   /* Stats */
-  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
-  @media (max-width: 760px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+  .stat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
+  @media (max-width: 980px) { .stat-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 620px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
   .stat {
     background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 26px 18px;
     text-align: center; transition: transform .15s, border-color .2s;
   }
   .stat:hover { transform: translateY(-3px); border-color: rgba(96,165,250,.4); }
   .stat-total { background: linear-gradient(180deg, rgba(59,130,246,.14), var(--card)); border-color: rgba(96,165,250,.35); }
+  .stat-visits { background: linear-gradient(180deg, rgba(139,92,246,.16), var(--card)); border-color: rgba(167,139,250,.35); }
   .stat-ico { font-size: 26px; color: var(--blue); margin-bottom: 10px; }
   .stat-total .stat-ico { color: var(--green); }
+  .stat-visits .stat-ico { color: #a78bfa; }
   .stat-num { font-size: 34px; font-weight: 850; letter-spacing: -1px; color: #f8fafc; font-variant-numeric: tabular-nums; }
   .stat-lbl { font-size: 13px; color: var(--mut); margin-top: 4px; }
 
@@ -283,8 +286,13 @@
 <!-- STATS -->
 <section id="stats" style="background:var(--bg2);">
   <div class="wrap">
-    <div class="sec-head"><h2><i class="fas fa-chart-simple"></i> Thống kê</h2><p>Số liệu lượt tải tổng hợp trực tiếp từ GitHub.</p></div>
+    <div class="sec-head"><h2><i class="fas fa-chart-simple"></i> Thống kê</h2><p>Lượt truy cập & lượt tải, cập nhật trực tiếp.</p></div>
     <div class="stat-grid">
+      <div class="stat stat-visits">
+        <div class="stat-ico"><i class="fas fa-eye"></i></div>
+        <div class="stat-num" id="st-visits">—</div>
+        <div class="stat-lbl">Lượt truy cập</div>
+      </div>
       <div class="stat stat-total">
         <div class="stat-ico"><i class="fas fa-download"></i></div>
         <div class="stat-num" id="st-total">—</div>
@@ -464,6 +472,18 @@
           var el = document.getElementById(id); if (el) el.textContent = "—";
         });
       });
+
+    // Visit count from GoatCounter's public counter endpoint.
+    // Requires "Allow showing visitor counts" enabled in GoatCounter site settings.
+    fetch("https://viennvbn.goatcounter.com/counter/TOTAL.json")
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function (d) {
+        var n = parseInt(String(d.count || "0").replace(/[^\d]/g, ""), 10) || 0;
+        countUp(document.getElementById("st-visits"), n);
+      })
+      .catch(function () {
+        var el = document.getElementById("st-visits"); if (el) el.textContent = "—";
+      });
   })();
 
   // Lightbox: click a screenshot to zoom; click image/backdrop/✕ or press Esc to close.
@@ -505,5 +525,9 @@
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "VND" }
 }
 </script>
+
+<!-- GoatCounter privacy-friendly analytics -->
+<script data-goatcounter="https://viennvbn.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
