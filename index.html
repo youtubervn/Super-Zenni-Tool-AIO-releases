@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Super Zenni AIO Tool — Bộ công cụ video All-in-One</title>
+<meta name="description" content="Livestream 24/7, render, cắt ghép video, intro/outro/logo, phông xanh — một ứng dụng desktop cho Streamer & Reup. Tải về cho Windows, macOS, Linux." />
+<meta property="og:title" content="Super Zenni AIO Tool" />
+<meta property="og:description" content="Bộ công cụ video All-in-One cho Streamer & Reup. Windows · macOS · Linux." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://api.github.com" />
+<style>
+  :root {
+    --bg: #0b1120; --bg2: #111a2e; --card: #16213a; --line: #243049;
+    --txt: #e2e8f0; --mut: #94a3b8; --dim: #64748b;
+    --blue: #60a5fa; --green: #34d399; --grad1: #3b82f6; --grad2: #8b5cf6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--txt); line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+  .muted { color: var(--mut); }
+
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px);
+    background: rgba(11,17,32,.82); border-bottom: 1px solid var(--line);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 17px; }
+  .logo {
+    width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--grad1), var(--grad2)); font-size: 17px;
+  }
+  .brand .grad {
+    background: linear-gradient(90deg, var(--blue), #a78bfa);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .nav-links { display: flex; gap: 22px; font-size: 14px; }
+  .nav-links a { color: var(--mut); transition: color .15s; }
+  .nav-links a:hover { color: var(--txt); }
+  @media (max-width: 680px) { .nav-links { display: none; } }
+
+  /* Hero */
+  .hero { position: relative; text-align: center; padding: 84px 0 64px; overflow: hidden; }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(560px 280px at 50% -40px, rgba(59,130,246,.22), transparent 70%),
+      radial-gradient(420px 240px at 80% 60px, rgba(139,92,246,.16), transparent 70%);
+  }
+  .hero > * { position: relative; z-index: 1; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600;
+    color: var(--green); background: rgba(52,211,153,.1); border: 1px solid rgba(52,211,153,.25);
+    padding: 5px 12px; border-radius: 999px; margin-bottom: 22px;
+  }
+  .hero h1 { font-size: clamp(34px, 6vw, 58px); font-weight: 850; letter-spacing: -1.5px; line-height: 1.08; }
+  .hero h1 .grad {
+    background: linear-gradient(90deg, var(--blue), #a78bfa, var(--green));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero .sub { font-size: clamp(15px, 2.2vw, 19px); color: var(--mut); max-width: 620px; margin: 18px auto 0; }
+  .hero .tags { margin-top: 16px; font-size: 13.5px; color: var(--dim); }
+
+  /* Buttons */
+  .cta { margin-top: 34px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px; font-weight: 700; font-size: 15px;
+    padding: 13px 26px; border-radius: 12px; cursor: pointer; transition: transform .12s, box-shadow .2s, background .2s;
+    border: 1px solid transparent;
+  }
+  .btn-primary { background: linear-gradient(135deg, var(--grad1), var(--grad2)); color: #fff; box-shadow: 0 8px 26px rgba(59,130,246,.36); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(59,130,246,.46); }
+  .btn-ghost { background: var(--card); border-color: var(--line); color: var(--txt); }
+  .btn-ghost:hover { background: #1c2942; transform: translateY(-2px); }
+  .ver { display: inline-block; margin-top: 16px; font-size: 13px; color: var(--dim); font-family: ui-monospace, monospace; }
+
+  /* Sections */
+  section { padding: 60px 0; }
+  .sec-head { text-align: center; margin-bottom: 42px; }
+  .sec-head h2 { font-size: clamp(24px, 4vw, 34px); font-weight: 800; letter-spacing: -.6px; }
+  .sec-head p { color: var(--mut); margin-top: 8px; }
+
+  /* Download cards */
+  .dl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 760px) { .dl-grid { grid-template-columns: 1fr; } }
+  .dl-card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 26px 22px;
+    text-align: center; transition: transform .15s, border-color .2s;
+  }
+  .dl-card:hover { transform: translateY(-4px); border-color: rgba(96,165,250,.45); }
+  .dl-card .os-ico { font-size: 40px; margin-bottom: 12px; }
+  .dl-card h3 { font-size: 18px; font-weight: 700; }
+  .dl-card .arch { color: var(--dim); font-size: 13px; margin: 4px 0 18px; }
+  .dl-btn {
+    display: inline-flex; align-items: center; gap: 8px; width: 100%; justify-content: center;
+    background: rgba(96,165,250,.12); color: var(--blue); border: 1px solid rgba(96,165,250,.3);
+    padding: 11px; border-radius: 10px; font-weight: 700; font-size: 14px; transition: background .15s;
+  }
+  .dl-btn:hover { background: rgba(96,165,250,.22); }
+  .dl-note { margin-top: 12px; font-size: 12px; color: var(--dim); }
+
+  /* Features */
+  .feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 880px) { .feat-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .feat-grid { grid-template-columns: 1fr; } }
+  .feat {
+    background: linear-gradient(180deg, var(--card), var(--bg2)); border: 1px solid var(--line);
+    border-radius: 14px; padding: 22px;
+  }
+  .feat .ico { font-size: 26px; margin-bottom: 10px; }
+  .feat h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .feat p { font-size: 13.5px; color: var(--mut); }
+
+  /* Steps */
+  .steps { max-width: 760px; margin: 0 auto; display: grid; gap: 14px; }
+  .step { display: flex; gap: 16px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; }
+  .step .n {
+    flex: none; width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; font-weight: 800;
+    background: rgba(59,130,246,.16); color: var(--blue);
+  }
+  .step h4 { font-size: 15px; }
+  .step p { font-size: 13.5px; color: var(--mut); }
+
+  /* FAQ */
+  .faq { max-width: 760px; margin: 0 auto; display: grid; gap: 12px; }
+  details { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 4px 18px; }
+  summary { cursor: pointer; font-weight: 600; padding: 14px 0; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; color: var(--dim); font-size: 20px; }
+  details[open] summary::after { content: "−"; }
+  details p { padding: 0 0 16px; color: var(--mut); font-size: 14px; }
+
+  /* Footer */
+  footer { border-top: 1px solid var(--line); padding: 40px 0; text-align: center; color: var(--dim); font-size: 13.5px; }
+  .social { display: flex; gap: 20px; justify-content: center; margin-bottom: 18px; flex-wrap: wrap; }
+  .social a { color: var(--mut); transition: color .15s; }
+  .social a:hover { color: var(--blue); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand"><span class="logo">🎬</span> <span class="grad">Super Zenni AIO Tool</span></div>
+    <nav class="nav-links">
+      <a href="#download">Tải về</a>
+      <a href="#features">Tính năng</a>
+      <a href="#install">Cài đặt</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://viennv.dev" target="_blank" rel="noopener">viennv.dev ↗</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap">
+    <span class="badge">● Phiên bản mới nhất <span id="hero-ver">đang tải…</span></span>
+    <h1>Bộ công cụ video <span class="grad">All-in-One</span><br />cho Streamer &amp; Reup</h1>
+    <p class="sub">Livestream 24/7, render, cắt &amp; ghép video, intro/outro/logo, ghép phông xanh — tất cả trong một ứng dụng desktop. Tự cập nhật, không cần cài thêm gì.</p>
+    <p class="tags">🪟 Windows &nbsp;·&nbsp; 🍎 macOS (Apple Silicon + Intel) &nbsp;·&nbsp; 🐧 Linux</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#download">⬇️ Tải về ngay</a>
+      <a class="btn btn-ghost" href="#features">Xem tính năng</a>
+    </div>
+    <div><a class="ver" id="release-link" href="https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/latest" target="_blank" rel="noopener">Xem tất cả phiên bản & changelog ↗</a></div>
+  </div>
+</div>
+
+<!-- DOWNLOAD -->
+<section id="download">
+  <div class="wrap">
+    <div class="sec-head"><h2>📥 Tải về</h2><p>Chọn hệ điều hành của bạn — link luôn trỏ tới bản mới nhất.</p></div>
+    <div class="dl-grid">
+      <div class="dl-card">
+        <div class="os-ico">🪟</div><h3>Windows</h3><div class="arch">64-bit (.exe)</div>
+        <a class="dl-btn" id="dl-win" href="https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/latest" target="_blank" rel="noopener">⬇️ Tải về</a>
+        <div class="dl-note">Chạy trực tiếp, không cần cài</div>
+      </div>
+      <div class="dl-card">
+        <div class="os-ico">🍎</div><h3>macOS</h3><div class="arch">Universal — M1/M2/M3 + Intel (.zip)</div>
+        <a class="dl-btn" id="dl-mac" href="https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/latest" target="_blank" rel="noopener">⬇️ Tải về</a>
+        <div class="dl-note">Giải nén → kéo vào Applications</div>
+      </div>
+      <div class="dl-card">
+        <div class="os-ico">🐧</div><h3>Linux / Ubuntu</h3><div class="arch">64-bit (.tar.gz)</div>
+        <a class="dl-btn" id="dl-linux" href="https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/latest" target="_blank" rel="noopener">⬇️ Tải về</a>
+        <div class="dl-note">Giải nén → cấp quyền chạy</div>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:20px;font-size:13px;" class="muted">⚡ Lần đầu mở, app tự tải FFmpeg &amp; yt-dlp — không cần cài đặt thủ công.</p>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" style="background:var(--bg2);">
+  <div class="wrap">
+    <div class="sec-head"><h2>✨ Tính năng</h2><p>Mọi thứ một streamer / reup cần, trong một app.</p></div>
+    <div class="feat-grid">
+      <div class="feat"><div class="ico">📡</div><h3>Super Live Stream</h3><p>Phát nhiều luồng tới RTMP (YouTube/Facebook/TikTok), theo dõi FPS/bitrate trực tiếp, hẹn giờ, lặp, ngẫu nhiên. Video lỗi tự bỏ qua — lý tưởng cho 24/7.</p></div>
+      <div class="feat"><div class="ico">💻</div><h3>Basic Live Stream</h3><p>Tạo script độc lập (.bat/.sh) chạy trong console riêng, log có thời gian, luôn hiển thị kể cả khi lỗi. Quản lý & chạy lại dễ dàng.</p></div>
+      <div class="feat"><div class="ico">🎞️</div><h3>Render H264 / H265</h3><p>Chuyển mã hàng loạt với preset độ phân giải, bitrate, fps. Tăng tốc bằng GPU (NVENC).</p></div>
+      <div class="feat"><div class="ico">✂️</div><h3>Cắt &amp; Chia video</h3><p>Split theo thời gian, Trim đầu/cuối — xử lý hàng loạt, nhanh và chính xác.</p></div>
+      <div class="feat"><div class="ico">🔁</div><h3>Lặp &amp; Ghép video</h3><p>Loop theo số lần hoặc thời lượng; Concat nối nhiều clip thành một, tự chuẩn hoá.</p></div>
+      <div class="feat"><div class="ico">🎨</div><h3>Intro / Outro / Logo</h3><p>Ghép intro, outro và chèn logo watermark với xem trước trực tiếp.</p></div>
+      <div class="feat"><div class="ico">🟩</div><h3>Phông xanh (Chroma Key)</h3><p>Ghép clip phông xanh lên video nền, tự dò màu key, tự lặp khớp độ dài nền.</p></div>
+      <div class="feat"><div class="ico">📖</div><h3>Hướng dẫn trong app</h3><p>Mỗi công cụ có nút "?" kèm giới thiệu, các bước dùng, bảng tham số & sơ đồ (Anh/Việt).</p></div>
+      <div class="feat"><div class="ico">🔄</div><h3>Tự động cập nhật</h3><p>Báo khi có bản mới, tải về kèm tiến trình, tự cài & mở lại (Windows/Linux).</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section id="install">
+  <div class="wrap">
+    <div class="sec-head"><h2>🚀 Cài đặt trong 3 bước</h2></div>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><div><h4>Tải về</h4><p>Chọn file đúng hệ điều hành ở mục Tải về phía trên.</p></div></div>
+      <div class="step"><div class="n">2</div><div><h4>Mở ứng dụng</h4><p>Windows: chạy .exe (nếu SmartScreen cảnh báo → More info → Run anyway). macOS: giải nén, kéo vào Applications, chuột phải → Open. Linux: giải nén & chạy.</p></div></div>
+      <div class="step"><div class="n">3</div><div><h4>Bắt đầu dùng</h4><p>Lần đầu mở, app tự tải FFmpeg/yt-dlp. Đăng nhập và sử dụng tất cả công cụ.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="background:var(--bg2);">
+  <div class="wrap">
+    <div class="sec-head"><h2>❓ Câu hỏi thường gặp</h2></div>
+    <div class="faq">
+      <details><summary>App có cần cài FFmpeg trước không?</summary><p>Không. App tự tải FFmpeg và yt-dlp vào thư mục data/ cạnh ứng dụng khi chạy lần đầu.</p></details>
+      <details><summary>Windows báo "Windows protected your PC"?</summary><p>Đây là cảnh báo SmartScreen với ứng dụng mới. Bấm "More info" → "Run anyway".</p></details>
+      <details><summary>macOS báo "không mở được vì nhà phát triển chưa xác minh"?</summary><p>Chuột phải vào app → Open → Open. Chỉ cần làm một lần.</p></details>
+      <details><summary>Cập nhật phiên bản mới thế nào?</summary><p>App tự báo khi có bản mới. Windows/Linux cập nhật tự động; macOS tải về rồi hướng dẫn cài thủ công. Bạn cũng có thể bấm "Kiểm tra cập nhật" trong app.</p></details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="social">
+      <a href="https://viennv.dev" target="_blank" rel="noopener">🌐 Website</a>
+      <a href="https://panel.viennv.dev/register" target="_blank" rel="noopener">📝 Đăng ký</a>
+      <a href="https://www.facebook.com/viennv.tools" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://t.me/viennv_web" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://www.youtube.com/playlist?list=PLl-NYjxiUSc2CQV6jIHictnZ7jY9P2PZ6" target="_blank" rel="noopener">YouTube</a>
+    </div>
+    © 2026 viennv.dev · Made with ❤️ for streamers &amp; re-uploaders
+  </div>
+</footer>
+
+<script>
+  // Fetch the latest release to show the live version and direct download links.
+  var REPO = "youtubervn/Super-Zenni-Tool-AIO-releases";
+  fetch("https://api.github.com/repos/" + REPO + "/releases/latest", { headers: { Accept: "application/vnd.github+json" } })
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function (rel) {
+      var ver = rel.tag_name || "";
+      if (ver) {
+        document.getElementById("hero-ver").textContent = ver;
+        document.title = "Super Zenni AIO Tool " + ver + " — Tải về";
+      }
+      if (rel.html_url) document.getElementById("release-link").href = rel.html_url;
+
+      // Map assets to OS download buttons by filename.
+      (rel.assets || []).forEach(function (a) {
+        var n = (a.name || "").toLowerCase();
+        if (n.indexOf("windows") >= 0) setDL("dl-win", a.browser_download_url);
+        else if (n.indexOf("macos") >= 0 || n.indexOf("darwin") >= 0) setDL("dl-mac", a.browser_download_url);
+        else if (n.indexOf("linux") >= 0) setDL("dl-linux", a.browser_download_url);
+      });
+    })
+    .catch(function () {
+      document.getElementById("hero-ver").textContent = "";
+    });
+
+  function setDL(id, url) {
+    if (!url) return;
+    var el = document.getElementById(id);
+    if (el) el.setAttribute("href", url);
+  }
+</script>
+</body>
+</html>
