@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://zenni-aio.viennv.dev/sitemap.xml
