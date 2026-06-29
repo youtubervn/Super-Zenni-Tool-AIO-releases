@@ -644,11 +644,12 @@
     })
     .catch(function () { var el = document.getElementById("st-total"); if (el) el.textContent = "—"; });
 
-  /* ---------------- visit count (GoatCounter) ----------------
-     Note: /counter/TOTAL.json defaults to a narrow recent window and
-     returns 0; passing an early ?start= makes it return the all-time
-     total. (This endpoint sends CORS *, unlike the .html widget.) */
-  fetch("https://viennvbn.goatcounter.com/counter/TOTAL.json?start=2000-01-01")
+  /* ---------------- visit count (GoatCounter via Cloudflare Worker) ----------------
+     Proxied through our own Worker domain so ad/tracker blockers (common on
+     mobile) don't block the goatcounter.com request. The Worker fetches
+     /counter/TOTAL.json?start=2000-01-01 (early ?start= => all-time total)
+     and returns it with CORS *. */
+  fetch("https://zenni-aio-gc.viennv-bn.workers.dev/")
     .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function (d) { var n = parseInt(String(d.count || d.count_unique || "0").replace(/[^\d]/g, ""), 10) || 0; countUp(document.getElementById("st-visits"), n); })
     .catch(function () { var el = document.getElementById("st-visits"); if (el) el.textContent = "—"; });
