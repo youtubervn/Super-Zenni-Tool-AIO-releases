@@ -402,8 +402,8 @@
   <div class="wrap">
     <!-- Compact stats strip with CSS tooltips -->
     <div class="fstats">
-      <span class="fstat" data-i18n-tip="tip.visits"><i class="fas fa-eye"></i> <b id="st-visits">—</b></span>
-      <span class="fstat" data-i18n-tip="tip.total"><i class="fas fa-download"></i> <b id="st-total">—</b></span>
+      <span class="fstat" data-i18n-tip="tip.visits"><i class="fas fa-eye"></i> <b id="st-visits">0</b></span>
+      <span class="fstat" data-i18n-tip="tip.total"><i class="fas fa-download"></i> <b id="st-total">0</b></span>
     </div>
     <div class="social">
       <a href="https://viennv.dev" target="_blank" rel="noopener"><i class="fas fa-globe"></i> Website</a>
@@ -587,26 +587,60 @@
 
   /* ---------------- helpers ---------------- */
   var fmt = function (n) { return n.toLocaleString(lang === "vi" ? "vi-VN" : "en-US"); };
-  function countUp(el, target) {
-    if (!el) return; var dur = 900, t0 = null;
-    function step(ts) { if (!t0) t0 = ts; var p = Math.min((ts - t0) / dur, 1); var e = 1 - Math.pow(1 - p, 3);
-      el.textContent = fmt(Math.round(target * e)); if (p < 1) requestAnimationFrame(step); }
+  /* Count-up: every stat starts at 0 and animates to its loaded value the
+     first time its section scrolls into view. Animation only runs once both
+     conditions are met (data fetched AND section visible), in either order. */
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function CountUp(paint) { this.paint = paint; this.target = 0; this.loaded = false; this.shown = false; this.done = false; }
+  CountUp.prototype.set = function (v) { this.target = v; this.loaded = true; this._run(); };
+  CountUp.prototype.reveal = function () { this.shown = true; this._run(); };
+  CountUp.prototype.repaint = function () { this.paint(this.done ? this.target : 0); }; // re-format on language change
+  CountUp.prototype._run = function () {
+    if (this.done || !this.loaded || !this.shown) return;
+    this.done = true;
+    if (reduceMotion) { this.paint(this.target); return; }
+    var self = this, dur = 900, t0 = null;
+    function step(ts) { if (!t0) t0 = ts; var p = Math.min((ts - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+      self.paint(Math.round(self.target * e)); if (p < 1) requestAnimationFrame(step); }
     requestAnimationFrame(step);
-  }
+  };
   function setDL(id, url) { if (!url) return; var el = document.getElementById(id); if (el) el.setAttribute("href", url); }
   function fmtBytes(b) { if (!b) return ""; var mb = b / 1048576; return (mb >= 1 ? Math.round(mb) : mb.toFixed(1)) + " MB"; }
   function fmtDate(s) { if (!s) return ""; var d = new Date(s); var p = function (n) { return ("0" + n).slice(-2); };
     return p(d.getDate()) + "/" + p(d.getMonth() + 1) + "/" + d.getFullYear(); }
 
-  // store per-OS counts to re-render labels on language change
-  var DLC = { win: null, mac: null, linux: null };
-  function renderDlCounts() {
-    var label = I18N[lang]["dl.count"];
-    [["win", "dlc-win"], ["mac", "dlc-mac"], ["linux", "dlc-linux"]].forEach(function (p) {
-      var el = document.getElementById(p[1]); if (!el) return;
-      el.innerHTML = (DLC[p[0]] == null) ? "" : '<i class="fas fa-arrow-down"></i> <b>' + fmt(DLC[p[0]]) + '</b> ' + label;
+  // paint helpers: plain number (footer) vs. per-OS download line (icon + number + label)
+  function paintNum(id) { return function (v) { var el = document.getElementById(id); if (el) el.textContent = fmt(v); }; }
+  function paintOs(id) { return function (v) { var el = document.getElementById(id); if (el) el.innerHTML = '<i class="fas fa-arrow-down"></i> <b>' + fmt(v) + '</b> ' + I18N[lang]["dl.count"]; }; }
+  var cuTotal  = new CountUp(paintNum("st-total"));
+  var cuVisits = new CountUp(paintNum("st-visits"));
+  var cuWin    = new CountUp(paintOs("dlc-win"));
+  var cuMac    = new CountUp(paintOs("dlc-mac"));
+  var cuLinux  = new CountUp(paintOs("dlc-linux"));
+
+  // re-render all stat numbers/labels for the current language (called by applyLang)
+  function renderDlCounts() { [cuWin, cuMac, cuLinux, cuTotal, cuVisits].forEach(function (c) { c.repaint(); }); }
+
+  // reveal each counter the first time its own element scrolls into view.
+  // (threshold 0 = fire on first pixel, so a stat taller than the viewport
+  // still triggers — a high threshold could never fire on tall mobile layouts.)
+  (function () {
+    var watch = [
+      { c: cuWin,    sel: "#dlc-win"   },
+      { c: cuMac,    sel: "#dlc-mac"   },
+      { c: cuLinux,  sel: "#dlc-linux" },
+      { c: cuTotal,  sel: ".fstats"    },
+      { c: cuVisits, sel: ".fstats"    }
+    ];
+    if (!("IntersectionObserver" in window)) { watch.forEach(function (w) { w.c.reveal(); }); return; }
+    watch.forEach(function (w) {
+      var node = document.querySelector(w.sel); if (!node) { w.c.reveal(); return; }
+      var io = new IntersectionObserver(function (entries, obs) {
+        if (entries[0].isIntersecting) { w.c.reveal(); obs.disconnect(); }
+      }, { threshold: 0 });
+      io.observe(node);
     });
-  }
+  })();
 
   /* ---------------- latest release: version, date, links, sizes ---------------- */
   fetch("https://api.github.com/repos/" + REPO + "/releases/latest", { headers: { Accept: "application/vnd.github+json" } })
@@ -639,10 +673,10 @@
           else if (n.indexOf("linux") >= 0) linux += c;
         });
       });
-      DLC.win = win; DLC.mac = mac; DLC.linux = linux; renderDlCounts();
-      countUp(document.getElementById("st-total"), win + mac + linux);
+      cuWin.set(win); cuMac.set(mac); cuLinux.set(linux);
+      cuTotal.set(win + mac + linux);
     })
-    .catch(function () { var el = document.getElementById("st-total"); if (el) el.textContent = "—"; });
+    .catch(function () { /* leave totals at 0 */ });
 
   /* ---------------- visit count (GoatCounter via Cloudflare Worker) ----------------
      Proxied through our own Worker domain so ad/tracker blockers (common on
@@ -651,8 +685,8 @@
      and returns it with CORS *. */
   fetch("https://zenni-aio-gc.viennv-bn.workers.dev/")
     .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
-    .then(function (d) { var n = parseInt(String(d.count || d.count_unique || "0").replace(/[^\d]/g, ""), 10) || 0; countUp(document.getElementById("st-visits"), n); })
-    .catch(function () { var el = document.getElementById("st-visits"); if (el) el.textContent = "—"; });
+    .then(function (d) { var n = parseInt(String(d.count || d.count_unique || "0").replace(/[^\d]/g, ""), 10) || 0; cuVisits.set(n); })
+    .catch(function () { /* leave visits at 0 */ });
 
   /* ---------------- lightbox ---------------- */
   (function () {
