@@ -74,7 +74,7 @@ Cần thư viện hệ thống `libgtk-3` và `libwebkit2gtk-4.0` (đa số bả
 ### 🎬 Xử lý video (hàng loạt)
 | Công cụ | Mô tả |
 | --- | --- |
-| **Render H264 / H265** | Chuyển mã hàng loạt, preset độ phân giải / bitrate / fps, tăng tốc **GPU (NVENC)**. |
+| **Render H264 / H265** | Chuyển mã hàng loạt, preset độ phân giải / bitrate / fps, tăng tốc **GPU NVIDIA (NVENC)** — bật chung trong Cài đặt. |
 | **Split Video** | Cắt video dài thành nhiều phần theo thời gian (nhanh hoặc chính xác). |
 | **Trim Video** | Cắt bỏ số giây ở đầu/cuối, theo lô. |
 | **Loop Video** | Lặp video theo số lần hoặc tới thời lượng mục tiêu. |
@@ -86,9 +86,16 @@ Cần thư viện hệ thống `libgtk-3` và `libwebkit2gtk-4.0` (đa số bả
 | **Intro / Outro / Logo** | Ghép intro/outro và chèn logo watermark, có xem trước trực tiếp. |
 | **Add Green Screen** | Ghép phông xanh lên video nền, tự dò màu key, clip phông tự lặp khớp độ dài. |
 
+### 📥 Tải video
+| Công cụ | Mô tả |
+| --- | --- |
+| **Tải Video** | Dán nhiều URL và tải hàng loạt bằng **yt-dlp** — tải **tuần tự từ trên xuống**, có tiến trình trực tiếp; dòng nào lỗi **bấm vào** xem chi tiết. |
+
 ### 🧭 Tiện ích
 - 📖 **Hướng dẫn trong app** — mỗi công cụ có nút `?` kèm giới thiệu, các bước dùng, bảng tham số và sơ đồ minh hoạ (**song ngữ Anh / Việt**).
 - 🔄 **Tự động cập nhật** — app báo khi có bản mới, tải về kèm thanh tiến trình, rồi tự cài và mở lại (Windows/Linux) hoặc hướng dẫn cài (macOS).
+- ⚙️ **Cài đặt chung** — khởi động cùng Windows, tự kiểm tra & cập nhật khi mở, thông báo khi xong việc, thu vào khay (tray), và **công tắc GPU NVIDIA chung**. Mục **Dependencies** kiểm tra & cài/cập nhật **ffmpeg / ffplay / ffprobe / yt-dlp** theo yêu cầu.
+- 🔔 **Thông báo & lỗi rõ ràng** — mọi thao tác bật/dừng/cập nhật có toast (góc trên phải); lỗi trong bảng **bấm vào** để xem chi tiết kèm nút **Copy**.
 - 🔒 **An toàn** — không lưu mật khẩu trần (dùng keychain hệ điều hành), kiểm tra checksum file tải về.
 
 ---
