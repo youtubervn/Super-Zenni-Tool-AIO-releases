@@ -648,22 +648,46 @@
     });
   })();
 
-  /* ---------------- latest release: version, date, links, sizes ---------------- */
-  fetch("https://api.github.com/repos/" + REPO + "/releases/latest", { headers: { Accept: "application/vnd.github+json" } })
+  /* ---------------- latest release: version, date, links ----------------
+     Prefer the static latest.json published on every release (same origin, no
+     rate limit). The GitHub REST API is only a fallback — unauthenticated it is
+     capped at 60 requests/hour/IP and returns 403 once exhausted. */
+  function setVer(ver) {
+    if (!ver) return;
+    document.getElementById("hero-ver").textContent = ver;
+    document.getElementById("meta-ver").textContent = ver;
+    document.title = "Super Zenni Tool AIO Pro " + ver + " — Download";
+  }
+  function applyStaticLatest(d) {
+    setVer(d.tag || (d.version ? "v" + d.version : ""));
+    var dt = fmtDate(d.date); if (dt) document.getElementById("meta-date").textContent = dt;
+    if (d.releaseUrl) document.getElementById("release-link").href = d.releaseUrl;
+    if (d.assets) {
+      setDL("dl-win", d.assets.windows);
+      setDL("dl-mac", d.assets.macos);
+      setDL("dl-linux", d.assets.linux);
+    }
+  }
+  function applyApiLatest(rel) {
+    setVer(rel.tag_name || "");
+    var dt = fmtDate(rel.published_at); if (dt) document.getElementById("meta-date").textContent = dt;
+    if (rel.html_url) document.getElementById("release-link").href = rel.html_url;
+    (rel.assets || []).forEach(function (a) {
+      var n = (a.name || "").toLowerCase();
+      if (n.indexOf("windows") >= 0) setDL("dl-win", a.browser_download_url);
+      else if (n.indexOf("macos") >= 0 || n.indexOf("darwin") >= 0) setDL("dl-mac", a.browser_download_url);
+      else if (n.indexOf("linux") >= 0) setDL("dl-linux", a.browser_download_url);
+    });
+  }
+  function fetchLatestFromApi() {
+    return fetch("https://api.github.com/repos/" + REPO + "/releases/latest", { headers: { Accept: "application/vnd.github+json" } })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(applyApiLatest);
+  }
+  fetch("latest.json", { cache: "no-cache" })
     .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
-    .then(function (rel) {
-      var ver = rel.tag_name || "";
-      if (ver) { document.getElementById("hero-ver").textContent = ver; document.getElementById("meta-ver").textContent = ver;
-        document.title = "Super Zenni Tool AIO Pro " + ver + " — Download"; }
-      var dt = fmtDate(rel.published_at); if (dt) document.getElementById("meta-date").textContent = dt;
-      if (rel.html_url) document.getElementById("release-link").href = rel.html_url;
-      (rel.assets || []).forEach(function (a) {
-        var n = (a.name || "").toLowerCase();
-        if (n.indexOf("windows") >= 0) setDL("dl-win", a.browser_download_url);
-        else if (n.indexOf("macos") >= 0 || n.indexOf("darwin") >= 0) setDL("dl-mac", a.browser_download_url);
-        else if (n.indexOf("linux") >= 0) setDL("dl-linux", a.browser_download_url);
-      });
-    })
+    .then(applyStaticLatest)
+    .catch(function () { return fetchLatestFromApi(); })
     .catch(function () { document.getElementById("hero-ver").textContent = ""; });
 
   /* ---------------- download stats (all releases) ---------------- */
