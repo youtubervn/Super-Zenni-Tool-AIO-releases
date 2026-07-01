@@ -1,0 +1,12 @@
+{
+  "version": "1.1.1",
+  "tag": "v1.1.1",
+  "date": "2026-07-01T12:41:33Z",
+  "notes": "Added:\n- Download Video: paste many links at once (one link per line); each is fetched\n  independently, so one bad link doesn't sink the batch and failed lines stay in\n  the box to retry. Ctrl/Cmd+Enter to fetch.\n- Download Video: a YouTube cookies panel (paste Netscape cookies.txt) for\n  videos that need sign-in — age-restricted, 'confirm you're not a bot', private\n  playlists — with a how-to-get-cookies link. Saved once, applied to every\n  fetch/download.\n\nChanged:\n- Update check reads a static latest.json from the downloads site first, so it\n  no longer trips GitHub's API rate limit (was returning 403); the REST API is\n  only a fallback and a 403 now shows 'rate limited, try again in ~N min'.\n- The downloads website reads latest.json too, so the per-OS Download buttons\n  link directly to the file.\n\nFixed:\n- Landing page: per-OS Download buttons no longer open the GitHub release page\n  instead of downloading (they were left un-rewritten when the API was rate-limited).",
+  "releaseUrl": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/tag/v1.1.1",
+  "assets": {
+    "windows": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.1/super-zenni-tool-aio-pro-windows-amd64.exe",
+    "macos": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.1/super-zenni-tool-aio-pro-macos-universal.zip",
+    "linux": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.1/super-zenni-tool-aio-pro-linux-amd64.tar.gz"
+  }
+}
