@@ -1,12 +1,12 @@
 {
-  "version": "1.1.1",
-  "tag": "v1.1.1",
-  "date": "2026-07-01T12:41:33Z",
-  "notes": "Added:\n- Download Video: paste many links at once (one link per line); each is fetched\n  independently, so one bad link doesn't sink the batch and failed lines stay in\n  the box to retry. Ctrl/Cmd+Enter to fetch.\n- Download Video: a YouTube cookies panel (paste Netscape cookies.txt) for\n  videos that need sign-in — age-restricted, 'confirm you're not a bot', private\n  playlists — with a how-to-get-cookies link. Saved once, applied to every\n  fetch/download.\n\nChanged:\n- Update check reads a static latest.json from the downloads site first, so it\n  no longer trips GitHub's API rate limit (was returning 403); the REST API is\n  only a fallback and a 403 now shows 'rate limited, try again in ~N min'.\n- The downloads website reads latest.json too, so the per-OS Download buttons\n  link directly to the file.\n\nFixed:\n- Landing page: per-OS Download buttons no longer open the GitHub release page\n  instead of downloading (they were left un-rewritten when the API was rate-limited).",
-  "releaseUrl": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/tag/v1.1.1",
+  "version": "1.1.2",
+  "tag": "v1.1.2",
+  "date": "2026-07-02T11:34:57Z",
+  "notes": "Fixed:\n- Linux: livestreams (Basic + Super) now work on modern distros (Ubuntu 24.04+). The bundled ffmpeg 4.4.1 static build crashed while resolving the RTMP server hostname (segfault in getaddrinfo on modern glibc), so every stream died instantly. Linux now ships the pinned BtbN ffmpeg n8.1.2 suite instead.\n- Linux: ffplay and ffprobe now install automatically (and from Settings -> Dependencies). They come from the same suite tarball; the previous source (ffbinaries) never provided them for Linux at all.\n- Linux: Basic Live Stream now opens its console window on modern terminals (ptyxis - the Ubuntu 25.04+ default, GNOME Terminal, Console, Konsole, XFCE/MATE Terminal, kitty, alacritty, xterm). The old launcher used the legacy '-e' syntax that new terminals reject, so the stream script never ran.\n- Dependency installer: fixed a race where the automatic startup download and the Settings 'Install' buttons downloaded into the same file at the same time, corrupting each other so nothing ever installed. Installs are now serialized, skip work when the pinned suite is already present, and download to unique temp files.\n\nChanged:\n- Linux ffmpeg/ffplay/ffprobe are fetched from an immutable BtbN autobuild release with pinned SHA-256 checksums (amd64 + arm64).",
+  "releaseUrl": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/tag/v1.1.2",
   "assets": {
-    "windows": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.1/super-zenni-tool-aio-pro-windows-amd64.exe",
-    "macos": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.1/super-zenni-tool-aio-pro-macos-universal.zip",
-    "linux": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.1/super-zenni-tool-aio-pro-linux-amd64.tar.gz"
+    "windows": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.2/super-zenni-tool-aio-pro-windows-amd64.exe",
+    "macos": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.2/super-zenni-tool-aio-pro-macos-universal.zip",
+    "linux": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.2/super-zenni-tool-aio-pro-linux-amd64.tar.gz"
   }
 }
