@@ -1,12 +1,12 @@
 {
-  "version": "1.1.2",
-  "tag": "v1.1.2",
-  "date": "2026-07-02T11:34:57Z",
-  "notes": "Fixed:\n- Linux: livestreams (Basic + Super) now work on modern distros (Ubuntu 24.04+). The bundled ffmpeg 4.4.1 static build crashed while resolving the RTMP server hostname (segfault in getaddrinfo on modern glibc), so every stream died instantly. Linux now ships the pinned BtbN ffmpeg n8.1.2 suite instead.\n- Linux: ffplay and ffprobe now install automatically (and from Settings -> Dependencies). They come from the same suite tarball; the previous source (ffbinaries) never provided them for Linux at all.\n- Linux: Basic Live Stream now opens its console window on modern terminals (ptyxis - the Ubuntu 25.04+ default, GNOME Terminal, Console, Konsole, XFCE/MATE Terminal, kitty, alacritty, xterm). The old launcher used the legacy '-e' syntax that new terminals reject, so the stream script never ran.\n- Dependency installer: fixed a race where the automatic startup download and the Settings 'Install' buttons downloaded into the same file at the same time, corrupting each other so nothing ever installed. Installs are now serialized, skip work when the pinned suite is already present, and download to unique temp files.\n\nChanged:\n- Linux ffmpeg/ffplay/ffprobe are fetched from an immutable BtbN autobuild release with pinned SHA-256 checksums (amd64 + arm64).",
-  "releaseUrl": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/tag/v1.1.2",
+  "version": "1.1.3",
+  "tag": "v1.1.3",
+  "date": "2026-07-06T11:12:45Z",
+  "notes": "Added:\n- Download Video: 'Prefer H.264' toggle (on by default) that prioritizes the\n  H.264/AVC video track for maximum compatibility; falls back to best-available\n  codec when the source has no H.264, so a download never fails.\n\nChanged:\n- Reorganized the Download Video tool layout: the Video Source and Output &\n  Options cards now sit side by side at a 7:5 ratio with equal height and\n  aligned bottom edges; the YouTube-cookies panel is nested inside the Source\n  card; options are laid out compactly with the Download/Stop actions pinned to\n  the card bottom.\n\nFixed:\n- Quality dropdown in the Download Video tool was rendering behind the cookies\n  panel (z-index/stacking-context bug); it now opens above surrounding cards.",
+  "releaseUrl": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/tag/v1.1.3",
   "assets": {
-    "windows": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.2/super-zenni-tool-aio-pro-windows-amd64.exe",
-    "macos": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.2/super-zenni-tool-aio-pro-macos-universal.zip",
-    "linux": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.2/super-zenni-tool-aio-pro-linux-amd64.tar.gz"
+    "windows": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.3/super-zenni-tool-aio-pro-windows-amd64.exe",
+    "macos": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.3/super-zenni-tool-aio-pro-macos-universal.zip",
+    "linux": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.3/super-zenni-tool-aio-pro-linux-amd64.tar.gz"
   }
 }
