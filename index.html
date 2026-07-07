@@ -713,7 +713,7 @@
      mobile) don't block the goatcounter.com request. The Worker fetches
      /counter/TOTAL.json?start=2000-01-01 (early ?start= => all-time total)
      and returns it with CORS *. */
-  fetch("https://zenni-aio-gc.viennv-bn.workers.dev/")
+  fetch("https://zenni-aio-statistic.viennv.dev/")
     .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function (d) { var n = parseInt(String(d.count || d.count_unique || "0").replace(/[^\d]/g, ""), 10) || 0; cuVisits.set(n); })
     .catch(function () { /* leave visits at 0 */ });
