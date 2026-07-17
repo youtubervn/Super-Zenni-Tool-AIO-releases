@@ -1,12 +1,12 @@
 {
-  "version": "1.1.3",
-  "tag": "v1.1.3",
-  "date": "2026-07-06T11:12:45Z",
-  "notes": "Added:\n- Download Video: 'Prefer H.264' toggle (on by default) that prioritizes the\n  H.264/AVC video track for maximum compatibility; falls back to best-available\n  codec when the source has no H.264, so a download never fails.\n\nChanged:\n- Reorganized the Download Video tool layout: the Video Source and Output &\n  Options cards now sit side by side at a 7:5 ratio with equal height and\n  aligned bottom edges; the YouTube-cookies panel is nested inside the Source\n  card; options are laid out compactly with the Download/Stop actions pinned to\n  the card bottom.\n\nFixed:\n- Quality dropdown in the Download Video tool was rendering behind the cookies\n  panel (z-index/stacking-context bug); it now opens above surrounding cards.",
-  "releaseUrl": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/tag/v1.1.3",
+  "version": "1.1.4",
+  "tag": "v1.1.4",
+  "date": "2026-07-17T14:50:07Z",
+  "notes": "Added:\n- Sign in with email: the login screen now accepts your username OR email — labels, placeholder and subtitle updated accordingly (English/Vietnamese).\n\nChanged:\n- \"Kill All FFmpeg\" moved from the top header into Settings → Updates & data, next to the other maintenance actions. Same confirm dialog and result toast as before; the header is now cleaner.\n- Login screen title and subtitle are now localized (EN/VI) and follow the app language.",
+  "releaseUrl": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/tag/v1.1.4",
   "assets": {
-    "windows": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.3/super-zenni-tool-aio-pro-windows-amd64.exe",
-    "macos": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.3/super-zenni-tool-aio-pro-macos-universal.zip",
-    "linux": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.3/super-zenni-tool-aio-pro-linux-amd64.tar.gz"
+    "windows": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.4/super-zenni-tool-aio-pro-windows-amd64.exe",
+    "macos": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.4/super-zenni-tool-aio-pro-macos-universal.zip",
+    "linux": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.1.4/super-zenni-tool-aio-pro-linux-amd64.tar.gz"
   }
 }
