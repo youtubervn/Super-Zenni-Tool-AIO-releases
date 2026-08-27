@@ -92,6 +92,7 @@ Cần thư viện hệ thống `libgtk-3` và `libwebkit2gtk-4.0` (đa số bả
 | **Tải Video** | Dán nhiều URL và tải hàng loạt bằng **yt-dlp** — tải **tuần tự từ trên xuống**, có tiến trình trực tiếp; dòng nào lỗi **bấm vào** xem chi tiết. |
 
 ### 🧭 Tiện ích
+- 🌐 **6 ngôn ngữ** — giao diện tiếng **Anh, Việt, Trung, Nhật, Hàn, Thái** (mặc định tiếng Anh), đổi ngay từ màn hình đăng nhập hoặc footer.
 - 📖 **Hướng dẫn trong app** — mỗi công cụ có nút `?` kèm giới thiệu, các bước dùng, bảng tham số và sơ đồ minh hoạ (**song ngữ Anh / Việt**).
 - 🔄 **Tự động cập nhật** — app báo khi có bản mới, tải về kèm thanh tiến trình, rồi tự cài và mở lại (Windows/Linux) hoặc hướng dẫn cài (macOS).
 - ⚙️ **Cài đặt chung** — khởi động cùng Windows, tự kiểm tra & cập nhật khi mở, thông báo khi xong việc, thu vào khay (tray), **công tắc GPU NVIDIA chung**, và nút **Kill All FFmpeg** dừng khẩn cấp mọi tiến trình FFmpeg (có hỏi xác nhận). Mục **Dependencies** kiểm tra & cài/cập nhật **ffmpeg / ffplay / ffprobe / yt-dlp** theo yêu cầu.
