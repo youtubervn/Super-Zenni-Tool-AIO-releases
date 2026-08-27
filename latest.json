@@ -1,7 +1,7 @@
 {
   "version": "1.2.0",
   "tag": "v1.2.0",
-  "date": "2026-08-27T19:13:29Z",
+  "date": "2026-08-27T19:21:53Z",
   "notes": "Added:\n- 4 new UI languages: Chinese (中文), Japanese (日本語), Korean (한국어) and Thai (ไทย) — the app now ships in 6 languages, with a new flag dropdown language picker (native-name labels) in the footer AND on the login screen\n- Settings gear on the login screen: open app-wide Settings (auto-start, updates, dependencies, Kill All FFmpeg, ...) before signing in\n- Homepage link (zenni-aio.viennv.dev) on the login screen\n- Update checks now also work before signing in — the update banner can appear on the login screen\n\nChanged:\n- New account system: login now authenticates against the api.viennv.dev license server with a per-machine device identity; sessions are re-validated every 5 minutes, so account changes (lock, expiry, device limits) take effect within minutes instead of at next launch\n- Signing out (or quitting the app) now ends the server session immediately, freeing the device slot for another machine\n- Default language is now English (your saved language choice is kept)\n- Login/session errors are shown as clear, translated messages (wrong password, account expired, device limit reached, ...) instead of raw codes\n- Framework updated to Wails 2.13\n\nFixed:\n- Accounts without an expiry date no longer show \"Exp: 01/01/1970\" — the expiry line is hidden instead\n- Removed the stray gradient bar at the very top of the login screen\n- Language button and Settings button on the login screen are now the same height",
   "releaseUrl": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/tag/v1.2.0",
   "assets": {
