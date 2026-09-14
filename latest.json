@@ -1,12 +1,12 @@
 {
-  "version": "1.3.0",
-  "tag": "v1.3.0",
-  "date": "2026-09-14T15:07:57Z",
-  "notes": "Added:\n- Drag & drop videos straight from the file manager onto the file table of all 7 batch tools (Render H264/H265, Intro/Outro/Logo, Split, Trim, Chroma Key, Loop, Concat) — works alongside the Add Files button\n- Drop hints in every empty state, a permanent hint row under the table, and a drop overlay while dragging; non-video files are filtered out and reported with a toast\n- New drop.* strings added to all six languages (English, Vietnamese, Chinese, Japanese, Korean, Thai)\n\nChanged:\n- Concat's drag-to-reorder rows is unaffected by file drops, and it refuses drops while a job is running\n- In-app tool guides now mention drag & drop\n\nFixed:\n- Account/portal links now point to app.viennv.dev — the retired panel.viennv.dev links were dead buttons (Register and Account page)",
-  "releaseUrl": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/tag/v1.3.0",
+  "version": "1.3.1",
+  "tag": "v1.3.1",
+  "date": "2026-09-14T15:26:28Z",
+  "notes": "Fixed:\n- A video whose duration could not be read is no longer refused: Render H264/H265, Intro/Outro/Logo, Loop and Split now run anyway and show elapsed time instead of a percentage. Files with no duration header (MPEG-TS, FLV, some MKV) and files still being written render exactly as before\n- Split (exact mode) without a known duration stops at the first empty part and removes it, instead of not starting at all\n- Trim only needs the duration when \"trim from end\" is enabled; trimming from the start alone now runs to the end of the file\n- \"Error: Invalid Duration\" now says WHY in the clickable error popup: ffprobe's own message (e.g. \"moov atom not found\" for a recording that was never closed), a missing or unreadable file, or ffprobe/ffmpeg not being installed. The Copy button finally has something worth pasting\n- Chroma Key still needs the video length (the green screen loops forever, so it is what bounds the output) and now explains that in the error\n- Loop's \"Invalid Duration Format\" names the value it rejected and the format it expects (HH:MM:SS)\n\nChanged:\n- Running rows show \"Processing... 1:15\" (elapsed) when no percentage can be computed",
+  "releaseUrl": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/tag/v1.3.1",
   "assets": {
-    "windows": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.3.0/super-zenni-tool-aio-pro-windows-amd64.exe",
-    "macos": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.3.0/super-zenni-tool-aio-pro-macos-universal.zip",
-    "linux": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.3.0/super-zenni-tool-aio-pro-linux-amd64.tar.gz"
+    "windows": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.3.1/super-zenni-tool-aio-pro-windows-amd64.exe",
+    "macos": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.3.1/super-zenni-tool-aio-pro-macos-universal.zip",
+    "linux": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/download/v1.3.1/super-zenni-tool-aio-pro-linux-amd64.tar.gz"
   }
 }
