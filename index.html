@@ -19,7 +19,7 @@
 <meta property="og:url" content="https://zenni-aio.viennv.dev/" />
 <meta property="og:title" content="Super Zenni Tool AIO Pro — All-in-One Livestream &amp; Video Tool" />
 <meta property="og:description" content="24/7 multi-stream livestreaming, render, split/trim video, green screen. Free for Windows · macOS · Linux." />
-<meta property="og:image" content="https://zenni-aio.viennv.dev/assets/og-image.png" />
+<meta property="og:image" content="https://zenni-aio.viennv.dev/assets/og-image.png?v=2" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="Super Zenni Tool AIO Pro" />
@@ -28,7 +28,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Super Zenni Tool AIO Pro" />
 <meta name="twitter:description" content="All-in-one livestream &amp; video tool. Free for Windows · macOS · Linux." />
-<meta name="twitter:image" content="https://zenni-aio.viennv.dev/assets/og-image.png" />
+<meta name="twitter:image" content="https://zenni-aio.viennv.dev/assets/og-image.png?v=2" />
 
 <link rel="icon" type="image/png" href="assets/favicon.png" />
 <link rel="apple-touch-icon" href="assets/favicon.png" />
@@ -166,6 +166,19 @@
   .shot img:hover { transform: translateY(-4px); box-shadow: 0 18px 44px rgba(59,130,246,.28); }
   .shot figcaption { text-align: center; color: var(--mut); font-size: 13px; margin-top: 10px; }
 
+  /* Intro video — a poster until clicked, so YouTube loads nothing up front */
+  .yt { position: relative; max-width: 960px; margin: 0 auto; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 26px 70px rgba(0,0,0,.55); background: #000; }
+  .yt-play { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
+  .yt-play img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s, filter .3s; }
+  .yt-play:hover img { transform: scale(1.02); filter: brightness(1.08); }
+  .yt-btn { position: absolute; left: 50%; top: 50%; width: 84px; height: 60px; margin: -30px 0 0 -42px; border-radius: 16px; background: #ff0033; color: #fff; font-size: 24px; display: grid; place-items: center; box-shadow: 0 12px 34px rgba(0,0,0,.55); transition: transform .2s; }
+  .yt-play:hover .yt-btn { transform: scale(1.08); }
+  .yt iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .yt-link { text-align: center; margin-top: 16px; font-size: 14px; }
+  .yt-link a { color: var(--mut); transition: color .15s; }
+  .yt-link a:hover { color: #fff; }
+  .yt-link .fa-youtube { color: #ff0033; }
+
   /* Lightbox */
   .lightbox { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; background: rgba(2,6,16,.9); backdrop-filter: blur(6px); padding: 32px; opacity: 0; visibility: hidden; transition: opacity .2s, visibility .2s; }
   .lightbox.open { opacity: 1; visibility: visible; }
@@ -274,6 +287,7 @@
     <div class="nav-right">
       <nav class="nav-links" id="navlinks">
         <a href="#download" data-i18n="nav.download">Download</a>
+        <a href="#video" data-i18n="nav.video">Video</a>
         <a href="#features" data-i18n="nav.features">Features</a>
         <a href="#screenshots" data-i18n="nav.screenshots">Screenshots</a>
         <a href="#install" data-i18n="nav.install">Install</a>
@@ -300,12 +314,12 @@
       <p class="tags"><i class="fab fa-windows"></i> Windows &nbsp;·&nbsp; <i class="fab fa-apple"></i> macOS &nbsp;·&nbsp; <i class="fab fa-linux"></i> Linux</p>
       <div class="cta">
         <a class="btn btn-primary" href="#download"><i class="fas fa-download"></i> <span data-i18n="hero.ctaDownload">Download now</span></a>
-        <a class="btn btn-ghost" href="#features"><i class="fas fa-rocket"></i> <span data-i18n="hero.ctaFeatures">See features</span></a>
+        <a class="btn btn-ghost" href="#video"><i class="fas fa-play"></i> <span data-i18n="hero.ctaVideo">Watch the intro</span></a>
       </div>
       <div><a class="ver" id="release-link" href="https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/latest" target="_blank" rel="noopener" data-i18n="hero.allVersions">All versions &amp; changelog &#8599;</a></div>
     </div>
     <div class="hero-right">
-      <img class="hero-shot" src="assets/screenshots/super-live-stream.png" alt="Super Zenni Tool AIO Pro" loading="eager" />
+      <img class="hero-shot" src="assets/screenshots/super-live-stream-en.webp" data-shot="super-live-stream" width="1920" height="1200" alt="Super Zenni Tool AIO Pro — Super Live Stream" loading="eager" />
     </div>
   </div>
 </div>
@@ -343,6 +357,20 @@
   </div>
 </section>
 
+<!-- VIDEO -->
+<section id="video" style="background:var(--bg2);">
+  <div class="wrap">
+    <div class="sec-head"><h2><i class="fab fa-youtube"></i> <span data-i18n="video.title">Watch the intro</span></h2><p data-i18n="video.sub">Every tool in action — in under 2 minutes.</p></div>
+    <div class="yt">
+      <button class="yt-play" id="yt-play" type="button" aria-label="Play video" data-i18n-aria="video.play">
+        <img src="assets/video-poster.jpg" alt="Livestream 24/7 – Super Zenni Tool AIO Pro" width="1280" height="720" loading="lazy" />
+        <span class="yt-btn"><i class="fas fa-play"></i></span>
+      </button>
+    </div>
+    <p class="yt-link"><a href="https://youtu.be/J_BgujEUUCw" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> <span data-i18n="video.open">Watch on YouTube</span> &#8599;</a></p>
+  </div>
+</section>
+
 <!-- FEATURES -->
 <section id="features">
   <div class="wrap">
@@ -369,9 +397,12 @@
   <div class="wrap">
     <div class="sec-head"><h2><i class="fas fa-image"></i> <span data-i18n="shots.title">Screenshots</span></h2><p data-i18n="shots.sub">Clean, modern, easy to use.</p></div>
     <div class="shots">
-      <figure class="shot"><img src="assets/screenshots/chroma-key.png" alt="Green Screen / Chroma Key" loading="lazy" /><figcaption data-i18n="shots.cap1">Green Screen — overlay a chroma-key clip onto your video</figcaption></figure>
-      <figure class="shot"><img src="assets/screenshots/render-h264.png" alt="Render H264/H265" loading="lazy" /><figcaption data-i18n="shots.cap2">Render H264 / H265 — batch transcode</figcaption></figure>
-      <figure class="shot"><img src="assets/screenshots/in-app-guide.png" alt="In-app guide" loading="lazy" /><figcaption data-i18n="shots.cap3">Built-in guide for each tool</figcaption></figure>
+      <figure class="shot"><img src="assets/screenshots/render-h264-en.webp" data-shot="render-h264" width="1920" height="1200" alt="Render H264 / H265" loading="lazy" /><figcaption data-i18n="shots.cap1"></figcaption></figure>
+      <figure class="shot"><img src="assets/screenshots/intro-outro-logo-en.webp" data-shot="intro-outro-logo" width="1920" height="1200" alt="Intro / Outro / Logo" loading="lazy" /><figcaption data-i18n="shots.cap2"></figcaption></figure>
+      <figure class="shot"><img src="assets/screenshots/chroma-key-en.webp" data-shot="chroma-key" width="1920" height="1200" alt="Green Screen / Chroma Key" loading="lazy" /><figcaption data-i18n="shots.cap3"></figcaption></figure>
+      <figure class="shot"><img src="assets/screenshots/download-video-en.webp" data-shot="download-video" width="1920" height="1200" alt="Download Video" loading="lazy" /><figcaption data-i18n="shots.cap4"></figcaption></figure>
+      <figure class="shot"><img src="assets/screenshots/basic-live-stream-en.webp" data-shot="basic-live-stream" width="1920" height="1200" alt="Basic Live Stream" loading="lazy" /><figcaption data-i18n="shots.cap5"></figcaption></figure>
+      <figure class="shot"><img src="assets/screenshots/in-app-guide-en.webp" data-shot="in-app-guide" width="1920" height="1200" alt="In-app guide" loading="lazy" /><figcaption data-i18n="shots.cap6"></figcaption></figure>
     </div>
   </div>
 </section>
@@ -472,10 +503,10 @@
   /* ---------------- i18n ---------------- */
   var I18N = {
     en: {
-      "nav.download":"Download","nav.features":"Features","nav.screenshots":"Screenshots","nav.stats":"Stats","nav.install":"Install","nav.faq":"FAQ",
+      "nav.download":"Download","nav.video":"Video","nav.features":"Features","nav.screenshots":"Screenshots","nav.stats":"Stats","nav.install":"Install","nav.faq":"FAQ",
       "hero.latest":"Latest version","hero.title":"All-in-One video toolkit <span class=\"grad\">for Streamers &amp; Reup</span>",
       "hero.sub":"24/7 livestreaming, render, split &amp; merge, intro/outro/logo, green screen — all in one desktop app. Auto-updating, nothing else to install.",
-      "hero.ctaDownload":"Download now","hero.ctaFeatures":"See features","hero.allVersions":"All versions &amp; changelog &#8599;",
+      "hero.ctaDownload":"Download now","hero.ctaVideo":"Watch the intro","hero.allVersions":"All versions &amp; changelog &#8599;",
       "dl.title":"Download","dl.sub":"Pick your operating system — links always point to the latest build.","dl.btn":"Download",
       "dl.noteWin":"Run directly, no install","dl.noteMac":"Unzip → drag to Applications","dl.noteLinux":"Extract → make executable",
       "dl.version":"Version","dl.released":"Released","dl.req":"Windows 10+ · macOS 11+ · 64-bit",
@@ -496,7 +527,8 @@
       "feat.download.h":"Download Video","feat.download.p":"Batch-download from URLs with yt-dlp — sequential top-to-bottom, live progress, and clickable errors per video.",
       "feat.settings.h":"Settings &amp; Dependencies","feat.settings.p":"App-wide settings: auto-start, notifications, tray, one global NVIDIA-GPU switch, and a Kill All FFmpeg emergency stop. Check &amp; install ffmpeg / ffplay / ffprobe / yt-dlp on demand.",
       "shots.title":"Screenshots","shots.sub":"Clean, modern, easy to use.",
-      "shots.cap1":"Green Screen — overlay a chroma-key clip onto your video","shots.cap2":"Render H264 / H265 — batch transcode","shots.cap3":"Built-in guide for each tool",
+      "shots.cap1":"Render H264 / H265 — batch transcode with live per-file progress","shots.cap2":"Intro / Outro / Logo — brand a whole batch of videos at once","shots.cap3":"Green Screen — overlay a chroma-key clip onto your videos","shots.cap4":"Download Video — paste many links, they download one by one","shots.cap5":"Basic Live Stream — standalone scripts that keep streaming on their own","shots.cap6":"Built-in guide for each tool",
+      "video.title":"Watch the intro","video.sub":"Every tool in action — in under 2 minutes.","video.play":"Play video","video.open":"Watch on YouTube",
       "inst.title":"Install in 3 steps","inst.s1h":"Download","inst.s1p":"Pick the file for your OS in the Download section above.",
       "inst.s2h":"Open the app","inst.s2p":"<b>Windows:</b> run the .exe (if SmartScreen warns → More info → Run anyway).<br/><b>macOS:</b> unzip, drag to Applications, then right-click → Open (macOS 15+: System Settings → Privacy &amp; Security → Open Anyway).<br/><b>Linux:</b> extract &amp; run.",
       "inst.s3h":"Start using","inst.s3p":"On first launch the app downloads FFmpeg/yt-dlp. Sign in with your username or email and use every tool.",
@@ -514,10 +546,10 @@
       "donate.bankNote":"Scan with any VietQR / banking app · any amount is appreciated"
     },
     vi: {
-      "nav.download":"Tải về","nav.features":"Tính năng","nav.screenshots":"Giao diện","nav.stats":"Thống kê","nav.install":"Cài đặt","nav.faq":"FAQ",
+      "nav.download":"Tải về","nav.video":"Video","nav.features":"Tính năng","nav.screenshots":"Giao diện","nav.stats":"Thống kê","nav.install":"Cài đặt","nav.faq":"FAQ",
       "hero.latest":"Phiên bản mới nhất","hero.title":"Bộ công cụ video <span class=\"grad\">All-in-One</span> cho Streamer &amp; Reup",
       "hero.sub":"Livestream 24/7, render, cắt &amp; ghép video, intro/outro/logo, ghép phông xanh — tất cả trong một ứng dụng desktop. Tự cập nhật, không cần cài thêm gì.",
-      "hero.ctaDownload":"Tải về ngay","hero.ctaFeatures":"Xem tính năng","hero.allVersions":"Xem tất cả phiên bản &amp; changelog &#8599;",
+      "hero.ctaDownload":"Tải về ngay","hero.ctaVideo":"Xem video giới thiệu","hero.allVersions":"Xem tất cả phiên bản &amp; changelog &#8599;",
       "dl.title":"Tải về","dl.sub":"Chọn hệ điều hành của bạn — link luôn trỏ tới bản mới nhất.","dl.btn":"Tải về",
       "dl.noteWin":"Chạy trực tiếp, không cần cài","dl.noteMac":"Giải nén → kéo vào Applications","dl.noteLinux":"Giải nén → cấp quyền chạy",
       "dl.version":"Phiên bản","dl.released":"Phát hành","dl.req":"Windows 10+ · macOS 11+ · 64-bit",
@@ -538,7 +570,8 @@
       "feat.download.h":"Tải Video","feat.download.p":"Tải hàng loạt từ URL bằng yt-dlp — tuần tự từ trên xuống, có tiến trình trực tiếp và bấm xem lỗi từng video.",
       "feat.settings.h":"Cài đặt &amp; Phụ thuộc","feat.settings.p":"Cài đặt toàn app: khởi động cùng Windows, thông báo, khay hệ thống, một công tắc GPU NVIDIA chung, và nút Kill All FFmpeg dừng khẩn cấp. Kiểm tra &amp; cài ffmpeg / ffplay / ffprobe / yt-dlp khi cần.",
       "shots.title":"Giao diện","shots.sub":"Thiết kế tối giản, hiện đại, dễ dùng.",
-      "shots.cap1":"Phông xanh — chèn clip chroma-key lên video của bạn","shots.cap2":"Render H264 / H265 — chuyển mã hàng loạt","shots.cap3":"Hướng dẫn ngay trong app cho từng công cụ",
+      "shots.cap1":"Render H264 / H265 — chuyển mã hàng loạt, tiến độ từng file","shots.cap2":"Intro / Outro / Logo — gắn thương hiệu cho cả loạt video một lần","shots.cap3":"Phông xanh — chèn clip chroma-key lên video của bạn","shots.cap4":"Tải video — dán nhiều link, tự tải lần lượt","shots.cap5":"Basic Live Stream — script livestream chạy độc lập","shots.cap6":"Hướng dẫn ngay trong app cho từng công cụ",
+      "video.title":"Video giới thiệu","video.sub":"Xem mọi công cụ hoạt động — chưa đầy 2 phút.","video.play":"Phát video","video.open":"Xem trên YouTube",
       "inst.title":"Cài đặt trong 3 bước","inst.s1h":"Tải về","inst.s1p":"Chọn file đúng hệ điều hành ở mục Tải về phía trên.",
       "inst.s2h":"Mở ứng dụng","inst.s2p":"<b>Windows:</b> chạy .exe (nếu SmartScreen cảnh báo → More info → Run anyway).<br/><b>macOS:</b> giải nén, kéo vào Applications, rồi chuột phải → Open (macOS 15+: System Settings → Privacy &amp; Security → Open Anyway).<br/><b>Linux:</b> giải nén &amp; chạy.",
       "inst.s3h":"Bắt đầu dùng","inst.s3p":"Lần đầu mở, app tự tải FFmpeg/yt-dlp. Đăng nhập bằng tên đăng nhập hoặc email và sử dụng tất cả công cụ.",
@@ -574,6 +607,9 @@
     });
     document.querySelectorAll("[data-i18n-aria]").forEach(function (el) {
       var k = el.getAttribute("data-i18n-aria"); if (dict[k] != null) el.setAttribute("aria-label", dict[k]);
+    });
+    document.querySelectorAll("img[data-shot]").forEach(function (img) {
+      img.src = "assets/screenshots/" + img.getAttribute("data-shot") + "-" + lang + ".webp";
     });
     document.querySelectorAll(".lang button").forEach(function (b) {
       b.classList.toggle("active", b.getAttribute("data-lang") === lang);
@@ -721,12 +757,31 @@
     .then(function (d) { var n = parseInt(String(d.count || d.count_unique || "0").replace(/[^\d]/g, ""), 10) || 0; cuVisits.set(n); })
     .catch(function () { /* leave visits at 0 */ });
 
+  /* ---------------- intro video: load YouTube only when asked ---------------- */
+  (function () {
+    var btn = document.getElementById("yt-play"); if (!btn) return;
+    btn.addEventListener("click", function () {
+      var f = document.createElement("iframe");
+      f.src = "https://www.youtube-nocookie.com/embed/J_BgujEUUCw?autoplay=1&rel=0&hl=" + lang;
+      f.title = "Super Zenni Tool AIO Pro";
+      f.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      f.allowFullscreen = true;
+      f.referrerPolicy = "strict-origin-when-cross-origin";
+      btn.replaceWith(f);
+    });
+  })();
+
   /* ---------------- lightbox ---------------- */
   (function () {
     var lb = document.getElementById("lightbox"), lbImg = document.getElementById("lightbox-img"), lbCap = document.getElementById("lightbox-cap");
     function open(src, alt) { lbImg.src = src; lbImg.alt = alt || ""; lbCap.textContent = alt || ""; lb.classList.add("open"); document.body.style.overflow = "hidden"; }
     function close() { lb.classList.remove("open"); document.body.style.overflow = ""; setTimeout(function () { lbImg.src = ""; }, 200); }
-    document.querySelectorAll(".shot img, .hero-shot").forEach(function (img) { img.addEventListener("click", function () { open(img.src, img.alt); }); });
+    document.querySelectorAll(".shot img, .hero-shot").forEach(function (img) {
+      img.addEventListener("click", function () {
+        var cap = img.closest("figure") && img.closest("figure").querySelector("figcaption");
+        open(img.src, cap ? cap.textContent : img.alt);
+      });
+    });
     lb.addEventListener("click", close);
     document.getElementById("lightbox-close").addEventListener("click", function (e) { e.stopPropagation(); close(); });
     document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
@@ -797,11 +852,25 @@
   "applicationCategory": "MultimediaApplication",
   "description": "All-in-one 24/7 multi-stream livestreaming and video processing: render H264/H265, split/trim/loop/concat, intro-outro-logo, green screen.",
   "url": "https://zenni-aio.viennv.dev/",
-  "image": "https://zenni-aio.viennv.dev/assets/og-image.png",
+  "image": "https://zenni-aio.viennv.dev/assets/og-image.png?v=2",
   "downloadUrl": "https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/latest",
   "softwareVersion": "1.0.0",
   "author": { "@type": "Organization", "name": "viennv.dev", "url": "https://viennv.dev" },
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "Livestream 24/7 Tự Động, Nhiều Luồng – Giới Thiệu Super Zenni Tool AIO Pro",
+  "description": "Giới thiệu Super Zenni Tool AIO Pro: livestream 24/7 nhiều luồng, render H264/H265 hàng loạt, intro/outro/logo, phông xanh, chia – cắt – lặp – ghép và tải video trong một ứng dụng.",
+  "thumbnailUrl": ["https://i.ytimg.com/vi/J_BgujEUUCw/maxresdefault.jpg", "https://zenni-aio.viennv.dev/assets/video-poster.jpg"],
+  "uploadDate": "2026-10-29T09:16:23-07:00",
+  "duration": "PT1M42S",
+  "contentUrl": "https://www.youtube.com/watch?v=J_BgujEUUCw",
+  "embedUrl": "https://www.youtube.com/embed/J_BgujEUUCw"
 }
 </script>
 

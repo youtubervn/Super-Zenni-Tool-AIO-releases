@@ -9,6 +9,7 @@
 [![Download](https://img.shields.io/badge/⬇️_Tải_về-Bản_mới_nhất-22c55e?style=for-the-badge)](https://github.com/youtubervn/Super-Zenni-Tool-AIO-releases/releases/latest)
 [![Platform](https://img.shields.io/badge/Windows_·_macOS_·_Linux-0ea5e9?style=for-the-badge)](#-tải-về)
 [![Website](https://img.shields.io/badge/🌐_viennv.dev-1e293b?style=for-the-badge)](https://viennv.dev)
+[![Video](https://img.shields.io/badge/▶_Video_giới_thiệu-ff0033?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/J_BgujEUUCw)
 
 </div>
 
@@ -18,6 +19,12 @@
 
 > ⚡ Dùng FFmpeg & yt-dlp, **tự tải về khi mở lần đầu** — không cần cài đặt gì thêm.
 > 🖥️ Chạy trên **Windows, macOS (Apple Silicon + Intel), và Linux**.
+
+---
+
+## ▶️ Video giới thiệu
+
+[![Xem video giới thiệu Super Zenni Tool AIO Pro trên YouTube](assets/video-poster.jpg)](https://youtu.be/J_BgujEUUCw)
 
 ---
 
