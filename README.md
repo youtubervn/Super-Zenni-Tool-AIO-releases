@@ -10,6 +10,7 @@
 [![Platform](https://img.shields.io/badge/Windows_·_macOS_·_Linux-0ea5e9?style=for-the-badge)](#-tải-về)
 [![Website](https://img.shields.io/badge/🌐_viennv.dev-1e293b?style=for-the-badge)](https://viennv.dev)
 [![Video](https://img.shields.io/badge/▶_Video_giới_thiệu-ff0033?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/J_BgujEUUCw)
+[![Tutorial](https://img.shields.io/badge/Hướng_dẫn_chi_tiết-15_phút-ff0033?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/e_2hA7FT6i0)
 
 </div>
 
@@ -22,9 +23,41 @@
 
 ---
 
-## ▶️ Video giới thiệu
+## ▶️ Video giới thiệu & hướng dẫn
 
-[![Xem video giới thiệu Super Zenni Tool AIO Pro trên YouTube](assets/video-poster.jpg)](https://youtu.be/J_BgujEUUCw)
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <a href="https://youtu.be/J_BgujEUUCw"><img src="assets/video-poster.jpg" alt="Xem video giới thiệu Super Zenni Tool AIO Pro trên YouTube" /></a><br />
+      <b>Giới thiệu nhanh</b> · 1:42
+    </td>
+    <td width="50%" align="center">
+      <a href="https://youtu.be/e_2hA7FT6i0"><img src="assets/tutorial-poster.jpg" alt="Xem video hướng dẫn chi tiết Super Zenni Tool AIO Pro trên YouTube" /></a><br />
+      <b>Hướng dẫn chi tiết từ A–Z</b> · 15:35
+    </td>
+  </tr>
+</table>
+
+<details>
+<summary><b>📑 Mục lục video hướng dẫn</b> — bấm vào thời điểm để xem ngay phần bạn cần</summary>
+
+| Thời điểm | Nội dung |
+| --- | --- |
+| [00:00](https://youtu.be/e_2hA7FT6i0) | Giới thiệu |
+| [00:31](https://youtu.be/e_2hA7FT6i0?t=31) | Tải về, cài đặt & đăng ký miễn phí |
+| [01:48](https://youtu.be/e_2hA7FT6i0?t=108) | Đăng nhập & làm quen giao diện |
+| [03:01](https://youtu.be/e_2hA7FT6i0?t=181) | Super Live Stream |
+| [05:04](https://youtu.be/e_2hA7FT6i0?t=304) | Basic Live Stream |
+| [05:57](https://youtu.be/e_2hA7FT6i0?t=357) | Render H264/H265 & cửa sổ Xuất video |
+| [08:15](https://youtu.be/e_2hA7FT6i0?t=495) | Chèn Intro, Outro & Logo |
+| [09:30](https://youtu.be/e_2hA7FT6i0?t=570) | Chèn phông xanh |
+| [10:33](https://youtu.be/e_2hA7FT6i0?t=633) | Cắt chia nhỏ & cắt ngắn video |
+| [11:39](https://youtu.be/e_2hA7FT6i0?t=699) | Lặp lại & ghép nối video |
+| [12:41](https://youtu.be/e_2hA7FT6i0?t=761) | Tải video |
+| [13:43](https://youtu.be/e_2hA7FT6i0?t=823) | Cài đặt phần mềm |
+| [14:47](https://youtu.be/e_2hA7FT6i0?t=887) | Lưu ý & lời kết |
+
+</details>
 
 ---
 
