@@ -146,7 +146,7 @@ Trong thư mục <code>data/</code> cạnh ứng dụng: binary dùng chung ở 
 <div align="center">
 
 [![Website](https://img.shields.io/badge/🌐_Website-viennv.dev-0ea5e9?style=flat-square)](https://viennv.dev)
-[![Register](https://img.shields.io/badge/📝_Đăng_ký-panel.viennv.dev-22c55e?style=flat-square)](https://panel.viennv.dev/register)
+[![Register](https://img.shields.io/badge/📝_Đăng_ký-app.viennv.dev-22c55e?style=flat-square)](https://app.viennv.dev/register)
 [![Facebook](https://img.shields.io/badge/Facebook-viennv.tools-1877f2?style=flat-square&logo=facebook&logoColor=white)](https://www.facebook.com/viennv.tools)
 [![Telegram](https://img.shields.io/badge/Telegram-viennv__web-26a5e4?style=flat-square&logo=telegram&logoColor=white)](https://t.me/viennv_web)
 [![YouTube](https://img.shields.io/badge/YouTube-Hướng_dẫn-ff0000?style=flat-square&logo=youtube&logoColor=white)](https://www.youtube.com/playlist?list=PLl-NYjxiUSc2CQV6jIHictnZ7jY9P2PZ6)
